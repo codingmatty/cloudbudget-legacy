@@ -6,6 +6,7 @@
  * Date: February 18, 2015
  * License: MIT
  * ################################################### */
+var path = require('path');
 
 module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
@@ -28,6 +29,7 @@ module.exports = function(grunt) {
   ];
   
   var SRC_DIR = 'source/';
+  var SRC_DIR_INDEX = SRC_DIR + 'index.html';
   var SRC_DIR_LIB = SRC_DIR + 'lib/';
   var SRC_DIR_JS = SRC_DIR + 'js/';
   var SRC_FILES_JS = [
@@ -67,7 +69,7 @@ module.exports = function(grunt) {
     //  EXCEPT for: index.html
     clean: {
       build: {
-        src: [BUILD_DIR + '*', '!' + BUILD_DIR + 'index.html', '!' + BUILD_DIR_LIB + '**'],
+        src: [BUILD_DIR + '*', '!' + BUILD_DIR_LIB + '**'],
         expand: true
       },
       scripts: {
@@ -108,6 +110,16 @@ module.exports = function(grunt) {
     },
     
     injector: {
+      bower: {
+        options: {
+          template: SRC_DIR_INDEX,
+          relative: true,
+          bowerPrefix: 'bower:',
+          min: true
+        },
+        src: ['bower.json'],
+        dest: BUILD_DIR_INDEX
+      },
       scripts: {
         options: {
           destFile: BUILD_DIR_INDEX,
@@ -119,15 +131,6 @@ module.exports = function(grunt) {
           src: [BUILD_DIR_LIB + '**/*.js', INJECT_FILES_JS, BUILD_FILE_MIN_JS, 
                 '!' + BUILD_DIR_LIB + 'bower/**', '!*.min.*']
         }]
-      },
-      bower: {
-        options: {
-          relative: true,
-          bowerPrefix: 'bower:',
-          min: true
-        },
-        src: ['bower.json'],
-        dest: BUILD_DIR_INDEX
       }
     },
 
@@ -167,9 +170,10 @@ module.exports = function(grunt) {
     express: {
       all: {
         options: {
-          port: 3000,
+          port: 3030,
           hostname: "0.0.0.0",
           bases: [BUILD_DIR],
+          server: path.resolve(__dirname, 'server.js'),
           livereload: true
         }
       }

@@ -1,8 +1,18 @@
-var http = require('http');
-var port = process.env.port || 3003;
+//var http = require('http');
+//var port = process.env.port || 3030;
+//
+//var connect = require('connect');
+//
+//connect.createServer(
+//    connect.static("./public")
+//).listen(port);
 
-var connect = require('connect');
+var express = require('express');
+var app = express();
 
-connect.createServer(
-    connect.static("./public")
-).listen(port);
+app.use(express.static(__dirname + '/public'));
+app.get('/*', function(req, res) {
+  res.sendfile('./public/index.html');
+});
+
+module.exports = app;
