@@ -16,7 +16,8 @@ module.exports = function(grunt) {
   var BUILD_DIR_INDEX = BUILD_DIR + 'index.html';
   var BUILD_DIR_LIB = BUILD_DIR + 'lib/';
   var BUILD_DIR_JS = BUILD_DIR + 'scripts/';
-  var BUILD_FILE_JS = BUILD_DIR_JS + 'app.js';
+  var BUILD_FILE_JS = BUILD_DIR_JS + 'cb.js';  
+  var BUILD_FILE_MIN_JS = BUILD_DIR_JS + 'cb.min.js';
   var BUILD_DIR_CSS = BUILD_DIR + 'styles/';
 
   var INJECT_FILES_JS = [
@@ -90,7 +91,7 @@ module.exports = function(grunt) {
       },
       dist: {
         src: [SRC_FILES_JS],
-        dest: BUILD_DIR_JS + '<%= pkg.name %>.js'
+        dest: BUILD_FILE_JS
       }
     },
     
@@ -100,8 +101,8 @@ module.exports = function(grunt) {
       },
       dist: {
         files: [{
-          src: ['<%= concat.dist.dest %>'],
-          dest: BUILD_DIR_JS + '<%= pkg.name %>.min.js'
+          src: [BUILD_FILE_JS],
+          dest: BUILD_FILE_MIN_JS
         }]
       }
     },
@@ -115,7 +116,7 @@ module.exports = function(grunt) {
         },
         files: [{
           expand: true,
-          src: [BUILD_DIR_LIB + '**/*.js', INJECT_FILES_JS, BUILD_FILE_JS, 
+          src: [BUILD_DIR_LIB + '**/*.js', INJECT_FILES_JS, BUILD_FILE_MIN_JS, 
                 '!' + BUILD_DIR_LIB + 'bower/**', '!*.min.*']
         }]
       },
