@@ -133,7 +133,36 @@ module.exports = function(grunt) {
         }]
       }
     },
+    
+      // Configuration to be run (and then tested). 
+    easy_mongo_fixture: {
+      load: {
+        options: {
+          host: 'localhost',
+          port: 27017,
+          //username: 'username',
+          //password: 'password'
+          database: 'cloudbudget',
+          dir: './database',
+          override: true,
+        },
+        collections: ['transactions'],
+        action: 'load'
+      },
 
+      save: {
+        options: {
+          host: 'localhost',
+          port: 27017,
+          database: 'cloudbudget',
+          dir: './database',
+          override: true,
+        },
+        collections: ['transactions'],
+        action: 'save'
+      }
+    },
+    
     // Configure the less compilation for both dev and prod
     //    less: {
     //      development: {
@@ -173,7 +202,7 @@ module.exports = function(grunt) {
           port: 3030,
           hostname: "0.0.0.0",
           bases: [BUILD_DIR],
-          server: path.resolve(__dirname, 'server.js'),
+          server: path.resolve(__dirname, 'server/server.js'),
           livereload: true
         }
       }

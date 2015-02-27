@@ -10,7 +10,7 @@ var bodyParser = require('body-parser');
 
 var mongoose   = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/dabears');
+mongoose.connect('mongodb://localhost:27017/cloudbudget');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -34,12 +34,12 @@ router.use(function(req, res, next) {
 
 // MODEL ROUTES
 // =============================================================================
-var bearRouter = require('./routes/bears');
+var transactionRouter = require('./routes/transactions');
 
 // REGISTER ROUTES -------------------------------
 // all of our routes will be prefixed with /api
 app.use('/api', router);
-app.use('/api/bears/', bearRouter);
+app.use('/api/transactions', transactionRouter);
 app.use('/', function(req, res) {
   res.sendFile(__dirname + '/../public/index.html');
 });
@@ -48,3 +48,5 @@ app.use('/', function(req, res) {
 // =============================================================================
 app.listen(port);
 console.log('Your server is ready for you on port: ' + port);
+
+module.exports = app;
