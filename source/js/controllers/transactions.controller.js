@@ -1,36 +1,89 @@
+function Transaction() {
+  this.date = new Date();
+  this.payee = '';
+  this.amount = 0;
+  this.account = '';
+  this.cleared = false;
+  this.tag = '';
+}
+
 angular.module('CloudBudget')
 .controller(
   'TransactionsController', 
   ['$scope', '$routeParams', '$location', 'Restangular',
    function($scope, $routeParams, $location, Restangular) {
      var vm = this;
-
-     var transactionsRest = Restangular.all('transactions');
-     transactionsRest.getList().then(function(transactions) {
-       vm.transactions = transactions;
-     });
-
+     
+     // Private Variables
      var views = ['list', 'form', 'show'];
-
-     var currentView = views[0]; // 'list'
-     if ($routeParams.transactionId) {
-       // TODO: if transactionId exists in Domain: show view, else: new view.
-       if ($location.path().endsWith('edit')) {
-         currentView = views[1];
-         
-       }
-       else {
-         currentView = views[2];
+     var transactionsRest;
+     
+     // Public Variables
+     vm.transactions = [];
+     vm.currentTransaction = {};
+     
+     // Private Functions
+     var init = function() {
+       // Initialize Restangular object and populate transactions
+       transactionsRest = Restangular.all('transactions');
+       transactionsRest.getList().then(function(transactions) {
+         vm.transactions = transactions;
+       });
+       
+       // Use url path to setup view
+       if ($routeParams.transactionId) {
+         if ($routeParams.transactionId == 'new') {
+           vm.createTransaction();
+         } else if ($location.path().search('/edit') > 0) {
+           vm.editTransaction($routeParams.transactionId);
+         } else {
+           vm.showTransaction($routeParams.transactionId);
+         }
+       } else {
+         vm.listTransactions();
        }
      }
+     
+     var setCurrentTransaction = function(transaction) {
+       vm.currentTransaction = transaction;
+       vm.currentTransaction.date = new Date(transaction.date);
+     }
 
+     // Public functions
      vm.getCurrentView = function() {
        return 'scripts/views/transactions/' + currentView + '.html';
      };
-     vm.setCurrentView = function(viewId) {
-       // TODO: if viewId is higher than views.length, throw error.
-       currentView = views[viewId];
+     
+     vm.listTransactions = function() {
+       currentView = 'list';
+     };
+     
+     vm.createTransaction = function() {
+       currentView = 'form';
+       setCurrentTransaction(new Transaction());
+     };
+     
+     vm.editTransaction = function(transactionId) {
+       currentView = 'form';
+       transactionsRest.get(transactionId).then(setCurrentTransaction);
+     };
+     
+     vm.showTransaction = function(transactionId) {
+       currentView = 'show';
+       transactionsRest.get(transactionId).then(setCurrentTransaction);
+     };
+     
+     vm.saveTransaction = function(transaction) {
+       if (transaction._id) {
+         transactionsRest.customPUT(transaction, transaction._id);
+         vm.showTransaction(transaction._id);
+       } else {
+         transactionsRest.post(transaction).then(function(postedTransaction) {
+           transaction._id = postedTransaction._id;
+           vm.showTransaction(transaction._id);
+         });
+       }
      }
-
-
+     
+     init();
    }]);

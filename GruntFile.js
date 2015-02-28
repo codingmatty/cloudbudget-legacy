@@ -114,6 +114,7 @@ module.exports = function(grunt) {
         options: {
           template: SRC_DIR_INDEX,
           relative: true,
+          addRootSlash: true,
           bowerPrefix: 'bower:',
           min: true,
         },
@@ -124,6 +125,7 @@ module.exports = function(grunt) {
         options: {
           destFile: BUILD_DIR_INDEX,
           relative: true,
+          addRootSlash: true,
           min: true
         },
         files: [{

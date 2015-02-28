@@ -48,7 +48,7 @@ router.route('')
         if (err)
             res.send(err);
 
-        res.json({ message: 'Transaction created!' });
+        res.json(transaction);
     });
 
 });
@@ -73,12 +73,12 @@ router.route('/:transaction_id')
             res.send(err);
         
         // Only save fields that have been passed, without editing ones that have not.
-        if (req.body.date) { transaction.date = req.body.date; }
-        if (req.body.payee) { transaction.payee = req.body.payee; }
-        if (req.body.amount) { transaction.amount = req.body.amount; }
-        if (req.body.account) { transaction.account = req.body.account; }
-        if (req.body.cleared) { transaction.cleared = req.body.cleared; }
-        if (req.body.tag) { transaction.tag = req.body.tag; }
+        if (req.body.date !== undefined) { transaction.date = req.body.date; }
+        if (req.body.payee !== undefined) { transaction.payee = req.body.payee; }
+        if (req.body.amount !== undefined) { transaction.amount = req.body.amount; }
+        if (req.body.account !== undefined) { transaction.account = req.body.account; }
+        if (req.body.cleared !== undefined) { transaction.cleared = req.body.cleared; }
+        if (req.body.tag !== undefined) { transaction.tag = req.body.tag; }
 
         // Save transaction and check for errors
         transaction.save(function(err) {

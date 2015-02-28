@@ -22,7 +22,7 @@ angular.module('CloudBudget')
      templateUrl: 'scripts/views/transactions/index.html',
      controller: 'TransactionsController'
    })
-   .when('/transactions/edit/:transactionId', {
+   .when('/transactions/:transactionId/edit', {
      templateUrl: 'scripts/views/transactions/index.html',
      controller: 'TransactionsController'
    })
