@@ -4,6 +4,7 @@
 // =============================================================================
 
 // call the packages we need
+var path       = require('path');
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
@@ -17,7 +18,7 @@ mongoose.connect('mongodb://localhost:27017/cloudbudget');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(express.static(__dirname + '/../public'));
+app.use(express.static(path.resolve(__dirname + '/../public')));
 
   
 var port = process.env.PORT || 8081;        // set our port
@@ -38,10 +39,10 @@ var transactionRouter = require('./routes/transactions');
 
 // REGISTER ROUTES -------------------------------
 // all of our routes will be prefixed with /api
-app.use('/api', router);
-app.use('/api/transactions', transactionRouter);
-app.use('/', function(req, res) {
-  res.sendFile(__dirname + '/../public/index.html');
+app.use('/api/v1', router);
+app.use('/api/v1/transactions', transactionRouter);
+app.use('/*', function(req, res) {
+  res.sendFile(path.resolve(__dirname + '/../public/index.html'));
 });
 
 // START THE SERVER

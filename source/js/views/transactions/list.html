@@ -1,1 +1,24 @@
-This is the List Transactions View.
+<table class="table">
+  <thead>
+    <th>Date</th>
+    <th>Payee</th>
+    <th>Amount</th>
+    <th>Account</th>
+    <th>Cleared</th>
+    <th></th>
+  </thead>
+  <tbody>
+    <tr ng-repeat="transaction in transactions.transactions">
+      <td>{{transaction.date}}</td>
+      <td>{{transaction.payee}}</td>
+      <td>{{transaction.amount}}</td>
+      <td>{{transaction.account}}</td>
+      <td>{{transaction.cleared}}</td>
+      <td>
+        <a href="/transactions/edit/{{transaction._id}}"> 
+          <span class="glyphicon glyphicon-pencil"></span>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>

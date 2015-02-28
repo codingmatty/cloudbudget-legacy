@@ -115,7 +115,7 @@ module.exports = function(grunt) {
           template: SRC_DIR_INDEX,
           relative: true,
           bowerPrefix: 'bower:',
-          min: true
+          min: true,
         },
         src: ['bower.json'],
         dest: BUILD_DIR_INDEX
@@ -199,7 +199,7 @@ module.exports = function(grunt) {
     express: {
       all: {
         options: {
-          port: 3030,
+          port: 8081,
           hostname: "0.0.0.0",
           bases: [BUILD_DIR],
           server: path.resolve(__dirname, 'server/server.js'),
