@@ -51,7 +51,7 @@ angular.module('CloudBudget')
 
      // Public functions
      vm.getCurrentView = function() {
-       return 'scripts/views/transactions/' + currentView + '.html';
+       return 'scripts/views/transactions/partials/' + currentView + '.partial.html';
      };
      
      vm.listTransactions = function() {
@@ -80,7 +80,7 @@ angular.module('CloudBudget')
        } else {
          transactionsRest.post(transaction).then(function(postedTransaction) {
            transaction._id = postedTransaction._id;
-           vm.showTransaction(transaction._id);
+           //vm.showTransaction(transaction._id);
          });
        }
      }

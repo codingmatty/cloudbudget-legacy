@@ -1,1 +1,1 @@
-angular.module('CloudBudget', ['ngRoute','restangular']);
+angular.module('CloudBudget', ['ngRoute','restangular','ui.bootstrap']);
