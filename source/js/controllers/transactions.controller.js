@@ -10,17 +10,19 @@ function Transaction() {
 angular.module('CloudBudget')
 .controller(
   'TransactionsController', 
-  ['$scope', '$routeParams', '$location', 'Restangular',
-   function($scope, $routeParams, $location, Restangular) {
+  ['$scope', '$routeParams', '$location', 'Restangular', 'matchmedia',
+   function($scope, $routeParams, $location, Restangular, matchmedia) {
      var vm = this;
      
      // Private Variables
      var views = ['list', 'form', 'show'];
+     var currentView = 'list';
      var transactionsRest;
      
      // Public Variables
      vm.transactions = [];
      vm.currentTransaction = {};
+     vm.showFormRow = false;
      
      // Private Functions
      var init = function() {
@@ -35,9 +37,9 @@ angular.module('CloudBudget')
          if ($routeParams.transactionId == 'new') {
            vm.createTransaction();
          } else if ($location.path().search('/edit') > 0) {
-           vm.editTransaction($routeParams.transactionId);
+           transactionsRest.get($routeParams.transactionId).then(vm.editTransaction);
          } else {
-           vm.showTransaction($routeParams.transactionId);
+           transactionsRest.get($routeParams.transactionId).then(vm.showTransaction);
          }
        } else {
          vm.listTransactions();
@@ -46,7 +48,9 @@ angular.module('CloudBudget')
      
      var setCurrentTransaction = function(transaction) {
        vm.currentTransaction = transaction;
-       vm.currentTransaction.date = new Date(transaction.date);
+       if (transaction.date) {
+        vm.currentTransaction.date = new Date(transaction.date);
+       }
      }
 
      // Public functions
@@ -56,33 +60,45 @@ angular.module('CloudBudget')
      
      vm.listTransactions = function() {
        currentView = 'list';
+       vm.showFormRow = false;
      };
      
      vm.createTransaction = function() {
-       currentView = 'form';
-       setCurrentTransaction(new Transaction());
+       setCurrentTransaction({});
+       if (!matchmedia.isDesktop()) {
+         currentView = 'form';
+       } else {
+         currentView = 'list';
+         vm.showFormRow = true;
+       }
      };
      
-     vm.editTransaction = function(transactionId) {
-       currentView = 'form';
-       transactionsRest.get(transactionId).then(setCurrentTransaction);
+     vm.editTransaction = function(transaction) {
+       setCurrentTransaction(transaction);
+       if (!matchmedia.isDesktop()) {
+         currentView = 'form';
+       } else {
+         currentView = 'list';
+         vm.showFormRow = true;
+       }
      };
      
-     vm.showTransaction = function(transactionId) {
+     vm.showTransaction = function(transaction) {
        currentView = 'show';
-       transactionsRest.get(transactionId).then(setCurrentTransaction);
+       setCurrentTransaction(transaction);
      };
      
      vm.saveTransaction = function(transaction) {
        if (transaction._id) {
          transactionsRest.customPUT(transaction, transaction._id);
-         vm.showTransaction(transaction._id);
        } else {
          transactionsRest.post(transaction).then(function(postedTransaction) {
            transaction._id = postedTransaction._id;
-           //vm.showTransaction(transaction._id);
+           vm.transactions.push(postedTransaction);
          });
        }
+       setCurrentTransaction({});
+       vm.listTransactions();
      }
      
      init();

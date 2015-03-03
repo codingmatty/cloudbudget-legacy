@@ -24,7 +24,8 @@
     "mobile-angular-ui": "~1.2.0-beta.11",
     "angular-route": "~1.3.13",
     "restangular": "~1.4.0",
-    "bootstrap-css": "~3.2.0"
+    "bootstrap-css": "~3.2.0",
+    "matchmedia-ng": "~1.0.5"
   },
   "resolutions": {
     "angular": "~1.3.13",

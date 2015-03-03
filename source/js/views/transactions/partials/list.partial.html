@@ -1,70 +1,77 @@
-<table class="table">
-  <thead>
-    <th>Date</th>
-    <th>Payee</th>
-    <th>Amount</th>
-    <th>Account</th>
-    <th>Cleared</th>
-    <th>Tag</th>
-    <th></th>
-  </thead>
-  <tbody>
-    <tr ng-repeat="transaction in tCtrlr.transactions">
-      <td>{{transaction.date | date}}</td>
-      <td>{{transaction.payee}}</td>
-      <td>{{transaction.amount | currency}}</td>
-      <td>{{transaction.account}}</td>
-      <td>{{transaction.cleared}}</td>
-      <td>{{transaction.tag}}</td>
-      <td>
-        <a ng-click="tCtrlr.editTransaction(transaction._id)"> 
-          <span class="glyphicon glyphicon-pencil"></span>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input type="date" name="date" 
-               ng-model="tCtrlr.currentTransaction.date" 
-               class="form-control" />
-      </td>
-      <td>
-        <input type="text" name="payee" 
-               ng-model="tCtrlr.currentTransaction.payee" 
-               class="form-control" />
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <th>Date</th>
+      <th>Payee</th>
+      <th>Amount</th>
+      <th>Account</th>
+      <th>Cleared</th>
+      <th>Tag</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="transaction in tCtrlr.transactions">
+        <td>{{transaction.date | date}}</td>
+        <td>{{transaction.payee}}</td>
+        <td>{{transaction.amount | currency}}</td>
+        <td>{{transaction.account}}</td>
+        <td>{{transaction.cleared}}</td>
+        <td>{{transaction.tag}}</td>
+        <td>
+          <a ng-click="tCtrlr.editTransaction(transaction)"> 
+            <span class="glyphicon glyphicon-pencil"></span>
+          </a>
+        </td>
+      </tr>
+      <tr ng-show="tCtrlr.showFormRow">
+        <td>
+          <input type="date" name="date" 
+                 ng-model="tCtrlr.currentTransaction.date" 
+                 class="form-control" />
+        </td>
+        <td>
+          <input type="text" name="payee" 
+                 ng-model="tCtrlr.currentTransaction.payee" 
+                 class="form-control" />
 
-      </td>
-      <td>
-        <input type="number" name="amount" 
-               ng-model="tCtrlr.currentTransaction.amount" 
-               class="form-control" />
+        </td>
+        <td>
+          <input type="number" name="amount" 
+                 ng-model="tCtrlr.currentTransaction.amount" 
+                 class="form-control" />
 
-      </td>
-      <td>
-        <input type="text" name="account" 
-               ng-model="tCtrlr.currentTransaction.account" 
-               class="form-control" />
+        </td>
+        <td>
+          <input type="text" name="account" 
+                 ng-model="tCtrlr.currentTransaction.account" 
+                 class="form-control" />
 
-      </td>
-      <td>
-        <input ng-init="tCtrlr.currentTransaction.cleared=false;"
-               type="checkbox" name="cleared" 
-               ng-model="tCtrlr.currentTransaction.cleared" 
-               class="form-control" />
+        </td>
+        <td>
+          <input ng-init="tCtrlr.currentTransaction.cleared=false;"
+                 type="checkbox" name="cleared" 
+                 ng-model="tCtrlr.currentTransaction.cleared" 
+                 class="form-control" />
 
-      </td>
-      <td class="btn-group">
-        <label class="btn btn-primary" ng-model="tCtrlr.currentTransaction.tag" btn-radio="'count'">Count</label>
-        <label class="btn btn-primary" ng-model="tCtrlr.currentTransaction.tag" btn-radio="'dontcount'">Don't Count</label>
-        <label class="btn btn-primary" ng-model="tCtrlr.currentTransaction.tag" btn-radio="'bill'">Bill</label>
-      </td>
-      <td>
-        <button type="submit" class="btn btn-default" 
-          ng-click="tCtrlr.saveTransaction(tCtrlr.currentTransaction)">
-          Submit
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+        </td>
+        <td class="btn-group">
+          <label class="btn btn-primary btn-sm" btn-radio="'count'"
+                 ng-model="tCtrlr.currentTransaction.tag">Count</label>
+          <label class="btn btn-primary btn-sm" btn-radio="'dontcount'"
+                 ng-model="tCtrlr.currentTransaction.tag">Don't Count</label>
+          <label class="btn btn-primary btn-sm" btn-radio="'bill'"
+                 ng-model="tCtrlr.currentTransaction.tag">Bill</label>
+        </td>
+        <td>
+          <button type="submit" class="btn btn-default" 
+                  ng-click="tCtrlr.saveTransaction(tCtrlr.currentTransaction)">
+            Submit
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 <button ng-click="tCtrlr.createTransaction()">New</button>
+<button ng-click="tCtrlr.listTransactions()">Cancel</button>

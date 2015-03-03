@@ -1,1 +1,1 @@
-angular.module('CloudBudget', ['ngRoute','restangular','ui.bootstrap']);
+angular.module('CloudBudget', ['ngRoute','restangular','ui.bootstrap','matchmedia-ng']);
