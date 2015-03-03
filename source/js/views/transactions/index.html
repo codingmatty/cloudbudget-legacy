@@ -1,4 +1,10 @@
 <div ng-controller="TransactionsController as tCtrlr"
-     class="container" >
+     class="panel panel-primary" >
+  <div class="panel-heading">
+    Transactions
+    <a class="pull-right" ng-click="tCtrlr.createTransaction()">
+      <span class="glyphicon glyphicon-plus"></span>
+    </a>
+  </div>
   <ng-include src="tCtrlr.getCurrentView()" />
 </div>
