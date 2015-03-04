@@ -18,16 +18,20 @@ angular.module('CloudBudget')
   ['$routeProvider', '$locationProvider', 'RestangularProvider',
    function($routeProvider, $locationProvider, RestangularProvider) {
    $routeProvider
+   .when('/', {
+     templateUrl: 'scripts/views/dashboard/dashboard.html',
+     controller: 'DashboardController'
+   })
    .when('/transactions/:transactionId?', {
-     templateUrl: 'scripts/views/transactions/index.html',
+     templateUrl: 'scripts/views/transactions/transactions.html',
      controller: 'TransactionsController'
    })
    .when('/transactions/:transactionId/edit', {
-     templateUrl: 'scripts/views/transactions/index.html',
+     templateUrl: 'scripts/views/transactions/transactions.html',
      controller: 'TransactionsController'
    })
    .otherwise({
-     redirectTo: '/transactions'
+     redirectTo: '/'
    });
 
    $locationProvider.html5Mode(true);

@@ -1,0 +1,11 @@
+<div ng-controller="DashboardController as dCtrlr">
+  <div class="panel panel-primary">
+    <div class="panel-heading">Spendable</div>
+    Monthly Spent: {{dCtrlr.monthlySpent()}}
+    <br>
+    Weekly Spent: {{dCtrlr.weeklySpent()}}
+    <br>
+    Daily Spent: {{dCtrlr.dailySpent()}}
+  </div>
+  <ng-include src="dCtrlr.getTransactionsView()" />
+</div>

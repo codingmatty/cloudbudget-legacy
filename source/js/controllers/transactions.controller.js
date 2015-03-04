@@ -1,17 +1,8 @@
-function Transaction() {
-  this.date = new Date();
-  this.payee = '';
-  this.amount = 0;
-  this.account = '';
-  this.cleared = false;
-  this.tag = '';
-}
-
 angular.module('CloudBudget')
   .controller(
   'TransactionsController', 
-  ['$scope', '$routeParams', '$location', 'Restangular', 'matchmedia',
-   function($scope, $routeParams, $location, Restangular, matchmedia) {
+  ['$routeParams', '$location', 'Restangular', 'matchmedia', 'SpendingService',
+   function($routeParams, $location, Restangular, matchmedia, SpendingService) {
      var vm = this;
 
      // region Variables
@@ -35,6 +26,9 @@ angular.module('CloudBudget')
        transactionsRest = Restangular.all('transactions');
        transactionsRest.getList().then(function(transactions) {
          vm.transactions = transactions;
+         vm.transactions.forEach(function(x) {
+           SpendingService.registerTransaction(x);
+         });
          setCurrentTransaction(vm.transactions.find(function(x) {
            return x._id == $routeParams.transactionId;
          }));
@@ -117,6 +111,7 @@ angular.module('CloudBudget')
        }
        setCurrentTransaction({});
        vm.listTransactions();
+       SpendingService.registerTransaction(transaction);
      }
      // endregion
      // endregion

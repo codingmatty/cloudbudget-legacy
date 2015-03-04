@@ -216,7 +216,7 @@ module.exports = function(grunt) {
       scripts: {
         options: { livereload: false },
         files: [SRC_FILES_JS],
-        tasks: ['copy']
+        tasks: ['copy','injector:scripts']
       },
 
       stylesless: {
