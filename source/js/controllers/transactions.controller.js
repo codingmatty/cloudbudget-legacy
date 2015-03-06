@@ -96,6 +96,7 @@ angular.module('CloudBudget')
          transaction.customDELETE(transaction._id).then(function() {
            var transactionIdx = vm.transactions.indexOf(transaction);
            vm.transactions.splice(transactionIdx, 1);
+           SpendingService.unregisterTransaction(transaction);
          });
        }
      }
@@ -103,15 +104,16 @@ angular.module('CloudBudget')
      vm.saveTransaction = function(transaction) {
        if (transaction._id) {
          transactionsRest.customPUT(transaction, transaction._id);
+         SpendingService.registerTransaction(transaction);
        } else {
          transactionsRest.post(transaction).then(function(postedTransaction) {
            transaction._id = postedTransaction._id;
            vm.transactions.push(postedTransaction);
+           SpendingService.registerTransaction(transaction);
          });
        }
        setCurrentTransaction({});
        vm.listTransactions();
-       SpendingService.registerTransaction(transaction);
      }
      // endregion
      // endregion
