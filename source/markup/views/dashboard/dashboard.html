@@ -1,0 +1,10 @@
+<div ng-controller="DashboardController as dCtrlr">
+  <ng-include src="dCtrlr.getWeeklySummaryView()" 
+              class="col-md-4" ></ng-include>
+  <ng-include src="dCtrlr.getDailySummaryView()"
+              class="col-md-4" ></ng-include>
+  <ng-include src="dCtrlr.getMonthlySummaryView()" 
+              class="col-md-4" ></ng-include>
+  <ng-include src="dCtrlr.getTransactionsView()" 
+              class="col-md-12" ></ng-include>
+</div>

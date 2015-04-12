@@ -11,14 +11,16 @@ var bodyParser = require('body-parser');
 
 var mongoose   = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/cloudbudget');
+var dbport = process.env.npm_package_config_mongodb_port;
+
+mongoose.connect('mongodb://localhost:' + dbport + '/cloudbudget');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 8081;        // set our port
+var port = process.env.PORT || 9090;        // set our port
 
 // MODEL ROUTES
 // =============================================================================
@@ -42,7 +44,7 @@ app.use('/*', function(req, res) {
 // START THE SERVER
 // =============================================================================
 
-//app.listen(port); // Grunt will start this...
+app.listen(port);
 console.log('Your server is ready for you on port: ' + port);
 
 module.exports = app;

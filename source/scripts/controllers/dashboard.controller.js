@@ -1,24 +1,24 @@
 angular.module('CloudBudget')
   .controller(
   'DashboardController', 
-  ['$routeParams', '$location', 'Restangular', 'matchmedia', 'SpendingService',
-   function($routeParams, $location, Restangular, matchmedia, SpendingService) {
+  ['viewUri', '$routeParams', '$location', 'Restangular', 'SpendingService',
+   function(viewUri, $routeParams, $location, Restangular, SpendingService) {
      var vm = this;
      
      vm.getDailySummaryView = function() {
-       return "scripts/views/spendable/spendable_daily.html";
+       return viewUri + "spendable/spendable_daily.html";
      };
      
      vm.getWeeklySummaryView = function() {
-       return "scripts/views/spendable/spendable_weekly.html";
+       return viewUri + "spendable/spendable_weekly.html";
      };
      
      vm.getMonthlySummaryView = function() {
-       return "scripts/views/spendable/spendable_monthly.html";
+       return viewUri + "spendable/spendable_monthly.html";
      };
      
      vm.getTransactionsView = function() {
-       return "scripts/views/transactions/transactions.html";
+       return viewUri + "transactions/transactions.html";
      };
      
    }]);

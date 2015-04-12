@@ -1,8 +1,8 @@
 angular.module('CloudBudget')
   .controller(
   'SpendableController', 
-  ['$routeParams', '$location', 'Restangular', 'matchmedia', 'SpendingService',
-   function($routeParams, $location, Restangular, matchmedia, SpendingService) {
+  ['$routeParams', '$location', 'Restangular', 'SpendingService',
+   function($routeParams, $location, Restangular, SpendingService) {
      var vm = this;
      
      // region Functions

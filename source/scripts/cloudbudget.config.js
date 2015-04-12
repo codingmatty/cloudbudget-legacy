@@ -5,7 +5,8 @@ angular.module('CloudBudget')
   */ 
 .constant('baseUrl', 'http://localhost:8081')
 .constant('apiUrl','http://localhost:8081/api/v1')
-
+.constant('viewUri', 'views/')
+          
 /**
   * Global Values Block
   */ 
@@ -15,19 +16,19 @@ angular.module('CloudBudget')
   * Cloud Budget Angular App Configuration
   */ 
 .config(
-  ['$routeProvider', '$locationProvider', 'RestangularProvider',
-   function($routeProvider, $locationProvider, RestangularProvider) {
+  ['$routeProvider', '$locationProvider', 'RestangularProvider', 'viewUri',
+   function($routeProvider, $locationProvider, RestangularProvider, viewUri) {
    $routeProvider
    .when('/', {
-     templateUrl: 'scripts/views/dashboard/dashboard.html',
+     templateUrl: viewUri + 'dashboard/dashboard.html',
      controller: 'DashboardController'
    })
    .when('/transactions/:transactionId?', {
-     templateUrl: 'scripts/views/transactions/transactions.html',
+     templateUrl: viewUri + 'transactions/transactions.html',
      controller: 'TransactionsController'
    })
    .when('/transactions/:transactionId/edit', {
-     templateUrl: 'scripts/views/transactions/transactions.html',
+     templateUrl: viewUri + 'transactions/transactions.html',
      controller: 'TransactionsController'
    })
    .otherwise({

@@ -1,0 +1,92 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <th class="col-md-2 text-center">Date</th>
+      <th class="col-md-2 text-center">Payee</th>
+      <th class="col-md-2 text-center">Amount</th>
+      <th class="col-md-2 text-center">Account</th>
+      <th class="col-md-1 text-center">Cleared</th>
+      <th class="col-md-2 text-center">Tag</th>
+      <th class="col-md-1"></th>
+      <!--      <th class="col-md-1"></th>-->
+    </thead>
+    <tbody>
+      <tr ng-repeat="transaction in tCtrlr.transactions">
+        <td class="col-md-2 text-center">{{transaction.date | date}}</td>
+        <td class="col-md-2 text-center">{{transaction.payee}}</td>
+        <td class="col-md-2 text-center">{{transaction.amount | currency}}</td>
+        <td class="col-md-2 text-center">{{transaction.account}}</td>
+        <td class="col-md-1 text-center"><input type="checkbox" style="height:100%;" ng-model="transaction.cleared" disabled></td>
+        <td class="col-md-2 text-center">
+          <div ng-switch="transaction.tag">
+            <button ng-switch-when="count" class="btn btn-danger btn-sm" style="width:50%;" disabled>Count</button>
+            <button ng-switch-when="dontcount" class="btn btn-default btn-sm" style="width:50%" disabled>Don't Count</button>
+            <button ng-switch-when="bill" class="btn btn-warning btn-sm" style="width:50%" disabled>Bill</button>
+            <button ng-switch-default class="btn btn-success btn-sm" style="width:50%" disabled>Credit</button>
+          </div>
+        </td>
+        <td class="col-md-1">
+          <a class="pull-left"
+             ng-click="tCtrlr.editTransaction(transaction)"> 
+            <span class="glyphicon glyphicon-pencil"></span>
+          </a>
+          <a class="pull-right"
+             ng-click="tCtrlr.deleteTransaction(transaction)"> 
+            <span class="glyphicon glyphicon-trash"></span>
+          </a>
+        </td>
+      </tr>
+      <tr ng-show="tCtrlr.showFormRow">
+        <td class="col-md-2">
+          <input type="date" name="date" 
+                 ng-model="tCtrlr.currentTransaction.date" 
+                 class="form-control" />
+        </td>
+        <td class="col-md-2">
+          <input type="text" name="payee" 
+                 ng-model="tCtrlr.currentTransaction.payee" 
+                 class="form-control" />
+
+        </td>
+        <td class="col-md-2">
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <input type="number" name="amount" 
+                   ng-model="tCtrlr.currentTransaction.amount" 
+                   class="form-control" />
+          </div>
+        </td>
+        <td class="col-md-2">
+          <input type="text" name="account" 
+                 ng-model="tCtrlr.currentTransaction.account" 
+                 class="form-control" />
+        </td>
+        <td class="col-md-1">
+          <input type="checkbox" name="cleared" 
+                 ng-model="tCtrlr.currentTransaction.cleared" 
+                 class="form-control" />
+        </td>
+        <td class="col-md-2 text-center">
+          <div class="btn-group">
+            <label class="btn btn-info btn-xs" btn-radio="'count'"
+                   ng-model="tCtrlr.currentTransaction.tag">Count</label>
+            <label class="btn btn-info btn-xs" btn-radio="'dontcount'"
+                   ng-model="tCtrlr.currentTransaction.tag">Don't Count</label>
+            <label class="btn btn-info btn-xs" btn-radio="'bill'"
+                   ng-model="tCtrlr.currentTransaction.tag">Bill</label>
+          </div>
+        </td>
+        <td class="col-md-1">
+          <button type="submit" class="btn btn-default" 
+                  ng-click="tCtrlr.saveTransaction(tCtrlr.currentTransaction)">
+            Submit
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="text-center">
+  <button class="btn btn-primary" ng-click="tCtrlr.createTransaction()">New</button>
+  <button class="btn btn-primary" ng-click="tCtrlr.listTransactions()">Cancel</button>
+</div>

@@ -1,4 +1,3 @@
-node_modules/
-/public/lib/bower/
-public/scripts/
-/public/index.html
+/node_modules/
+/bower_components/
+/public/

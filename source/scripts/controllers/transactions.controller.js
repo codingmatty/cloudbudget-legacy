@@ -1,8 +1,8 @@
 angular.module('CloudBudget')
   .controller(
   'TransactionsController', 
-  ['$routeParams', '$location', 'Restangular', 'matchmedia', 'SpendingService',
-   function($routeParams, $location, Restangular, matchmedia, SpendingService) {
+  ['viewUri', '$routeParams', '$location', 'Restangular', 'matchmedia', 'SpendingService',
+   function(viewUri, $routeParams, $location, Restangular, matchmedia, SpendingService) {
      var vm = this;
 
      // region Variables
@@ -58,7 +58,7 @@ angular.module('CloudBudget')
 
      // region Public functions
      vm.getCurrentView = function() {
-       return 'scripts/views/transactions/partials/' + currentView + '.partial.html';
+       return viewUri + 'transactions/partials/' + currentView + '.partial.html';
      };
 
      vm.listTransactions = function() {

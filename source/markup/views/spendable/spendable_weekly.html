@@ -1,0 +1,10 @@
+<div ng-controller="SpendableController as sCtrlrWeekly">
+  <div class="panel panel-primary">
+    <div class="panel-heading">Weekly Spendable</div>
+    Weekly Spendable: {{sCtrlrWeekly.weeklySpendable() | currency}}
+    <br>
+    Weekly Spent: {{sCtrlrWeekly.weeklySpent() | currency}}
+    <br>
+    Weekly Remaining: {{sCtrlrWeekly.weeklyRemaining() | currency}}
+  </div>
+</div>

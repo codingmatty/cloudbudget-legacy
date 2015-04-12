@@ -1,4 +1,9 @@
-angular.module('CloudBudget', ['ngRoute','restangular','ui.bootstrap','matchmedia-ng']);
+window._ = require('lodash');
+require('angular');
+require('angular-route');
+require('angular-ui-bootstrap-bower');
+require('restangular');
+require('matchmedia-ng');
 
 if(!Array.prototype.find) {
   Array.prototype.find = function(callback) {
@@ -15,3 +20,9 @@ if(!Array.prototype.find) {
     return returnVal;
   }
 }
+
+angular.module('CloudBudget', ['ngRoute','restangular','ui.bootstrap','matchmedia-ng']);
+
+require('./cloudbudget.config.js');
+require('./common');
+require('./controllers');

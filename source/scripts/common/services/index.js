@@ -1,0 +1,1 @@
+require('./spending.service.js');

@@ -1,1 +1,0 @@
-{ "_id" : { "$oid" : "54f0f5821a3a011c2a0b0d73" }, "date" : { "$date" : "2015-02-27T00:00:00.000-0600" }, "payee" : "H.E.B.", "amount" : 123.45, "account" : "Ally Checking", "cleared" : false, "tag" : "", "__v" : 0 }

@@ -3,8 +3,54 @@
   "version": "0.0.1",
   "description": "A simple Budgeting Web App",
   "main": "index.js",
+  "config": {
+    "mongodb": {
+      "dbpath": "db",
+      "port": "30000"
+    }
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rimraf public/*",
+    
+    "prebuild": "npm run clean -s",
+    "build": "npm run build:scripts -s && npm run build:styles -s && npm run build:markup -s",
+    
+    "build:scripts": "browserify -t debowerify -d source/scripts/cloudbudget.js -p [minifyify --compressPath . --map main.js.map --output public/main.js.map] | exorcist public/main.js.map > public/main.js",
+    "build:styles": "node-sass source/styles/index.scss -o build && cleancss -o public/main.min.css bower_components/bootstrap/dist/css/bootstrap.css build/*.css --source-map",
+    "postbuild:styles": "rimraf build",
+    "build:markup": "ncp source/markup/ public/",
+    
+    "test": "karma start --singleRun",
+    "watch:test": "karma start",
+    
+    "watch": "npm run watch:build -s",
+    "prewatch:build": "npm run clean -s",
+    "watch:build": "parallelshell \"npm run watch:build:scripts\" \"npm run watch:build:styles\" \"npm run watch:build:markup\"",
+    "watch:build:scripts": "nodemon -q -w source/scripts --ext js --exec 'npm run build:scripts'",
+    "watch:build:styles": "nodemon -q -w source/styles --ext scss,css --exec 'npm run build:styles'",
+    "watch:build:markup": "nodemon -q -w source/markup --ext html --exec 'npm run build:markup'",
+    
+    "open:prod": "opener http://example.com",
+    "open:stage": "opener http://staging.example.internal",
+    "open:dev": "opener http://localhost:9090",
+    
+    "deploy:prod": "s3-cli sync ./public/ s3://example-com/prod-site/",
+    "deploy:stage": "s3-cli sync ./public/ s3://example-com/stage-site/",
+    
+    "db:serve": "parallelshell \"npm run db:start -s\" \"npm run serve -s\"",
+    "db:start": "mongod --dbpath $npm_package_config_mongodb_dbpath --port $npm_package_config_mongodb_port",
+    "serve": "node server/server.js",
+    
+    "live-reload": "live-reload --port 9091 public/",
+    
+    "dev": "npm run open:dev -s & parallelshell \"npm run watch -s\" \"npm run live-reload -s\" \"npm run db:start -s\" \"npm run serve -s\"",
+    
+    
+    "build:scripts-save": "browserify -d source/scripts/**/*.js -p [minifyify --compressPath . --map main.js.map --output public/main.js.map] | hashmark -n public/main.js -s -l 8 -m assets.json 'public/{name}{hash}{ext}'",
+    "build:styles-save": "node-sass --source-map source/styles/main.scss -o public/ && hashmark -s -l 8 -m assets.json public/main.css 'public/{name}{hash}{ext}'",
+    "build:markup-save": "jade source/markup/index.jade --obj assets.json -o public",
+    "watch-save": "parallelshell \"npm run watch:test -s\" \"npm run watch:build -s\"",
+    "serve-save": "http-server -p 9090 public/"
   },
   "repository": {
     "type": "git",
@@ -12,26 +58,36 @@
   },
   "author": "Matthew Jacobs",
   "license": "ISC",
-  "devDependencies": {
-    "bower": "^1.3.12",
-    "grunt": "^0.4.5",
-    "grunt-angular-templates": "^0.5.7",
-    "grunt-autoprefixer": "^2.2.0",
-    "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-concat": "^0.5.0",
-    "grunt-contrib-copy": "^0.7.0",
-    "grunt-contrib-jshint": "^0.11.0",
-    "grunt-contrib-uglify": "^0.7.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-easy-mongo-fixture": "^1.0.4",
-    "grunt-express": "^1.4.1",
-    "grunt-injector": "^0.6.0",
-    "grunt-open": "^0.2.3",
-    "load-grunt-tasks": "^3.1.0"
-  },
   "dependencies": {
     "body-parser": "^1.12.0",
     "express": "^4.11.2",
+    "lodash": "^3.6.0",
     "mongoose": "^3.8.24"
+  },
+  "devDependencies": {
+    "bower": "^1.3.12",
+    "browserify": "^6.3.2",
+    "clean-css": "^3.1.9",
+    "debowerify": "^1.2.0",
+    "exorcist": "^0.1.2",
+    "hashmark": "^2.0.0",
+    "http-server": "^0.7.3",
+    "jade": "^1.7.0",
+    "jshint": "^2.5.10",
+    "karma": "^0.12.28",
+    "karma-browserify": "^1.0.0",
+    "karma-cli": "^0.0.4",
+    "karma-mocha": "^0.1.10",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "live-reload": "^0.2.0",
+    "minifyify": "^4.4.0",
+    "mocha": "^2.0.1",
+    "ncp": "^2.0.0",
+    "nodemon": "^1.2.1",
+    "opener": "^1.4.0",
+    "parallelshell": "^1.0.0",
+    "rimraf": "^2.2.8",
+    "s3-cli": "^0.11.1",
+    "node-sass": "^2.1.1"
   }
 }
