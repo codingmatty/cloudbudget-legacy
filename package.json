@@ -54,7 +54,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://stash.majacobs.net/scm/cb/cloudbudget.git"
+    "url": "https://git.majacobs.net/majacobs/cloudbudget.git"
   },
   "author": "Matthew Jacobs",
   "license": "ISC",
