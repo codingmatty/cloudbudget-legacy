@@ -11,7 +11,7 @@
       <!--      <th class="col-md-1"></th>-->
     </thead>
     <tbody>
-      <tr ng-repeat="transaction in tCtrlr.transactions">
+      <tr ng-repeat="transaction in tCtrlr.transactions | orderBy:'-date'">
         <td class="col-md-2 text-center">{{transaction.date | date}}</td>
         <td class="col-md-2 text-center">{{transaction.payee}}</td>
         <td class="col-md-2 text-center">{{transaction.amount | currency}}</td>

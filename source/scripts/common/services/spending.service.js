@@ -1,84 +1,141 @@
 angular.module('CloudBudget')
   .factory(
   'SpendingService',
-  [
-    function() {
-      var transactionIds = [];
-      var dailySpent = 0;
-      var weeklySpent = 0;
-      var monthlySpent= 0;
+  [ 'TimelineService',
+   function(TimelineService) {
+     var tl = TimelineService;
+     var today = new Date(2015, 3, 1);
+     var transactions = new Map();
 
-      var monthlySpendable = 2000;
+     var dailySpent = 0;
+     var weeklySpent = 0;
+     var monthlySpent = 0;
 
-      return {
-        getDailySpent: function() {return dailySpent;},
-        getWeeklySpent: function() {return weeklySpent;},
-        getMonthlySpent: function() {return monthlySpent;},
-        
-        
-        getDailySpendable: function() {
-          var today = new Date();
-          var lastDayOfThisMonth = (new Date(today.getFullYear(),today.getMonth() + 1,0)).getDate();
-          var daysRemaining = lastDayOfThisMonth - today.getDate() + 1;
-          return (monthlySpendable - monthlySpent) / daysRemaining;
-        },
-        getWeeklySpendable: function() {
-          var today = new Date();
-          var lastDayOfThisMonth = (new Date(today.getFullYear(),today.getMonth() + 1,0)).getDate();
-          var begOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay() + 1); // Plus 1 to make beg of week Monday
-          var weeksRemaining = (lastDayOfThisMonth - begOfWeek.getDate() + 1) / 7;
-          return ((monthlySpendable - monthlySpent) + weeklySpent) / weeksRemaining;
-        },
-        getMonthlySpendable: function() {
-          return monthlySpendable;
-        },
-        
-        setMonthlySpendable: function(calculatedSpendable) {
-          monthlySpendable = calculatedSpendable;
-        },
-        
-        registerTransaction: function(transaction) {
-          if (!transaction.date || transaction.tag != 'count' 
-             || transactionIds.indexOf(transaction._id) >= 0) return;
-          
-          transactionIds.push(transaction._id);
-          
-          var today = new Date();
-          var transactionDate = new Date(transaction.date);
+     function calculateDailySpent(date) {
+       date = date || today;
+       if (transactions.has(date.toDateString())) {
+         return transactions.get(date.toDateString()).reduce(function(spentInDay, currentTransaction) {
+           if (currentTransaction.tag == 'count')
+             return spentInDay + currentTransaction.amount;
+           else
+             return spentInDay;
+         }, 0);
+       } else {
+         return 0;
+       }
+     };
+     function calculateWeeklySpent(date) {
+       date = date || today;
+       return tl.daysInWeek(date).reduce(function(spentInWeek, currentDate) {
+         return spentInWeek + calculateDailySpent(currentDate);
+       }, 0);
+     };
+     function calculateMonthlySpent(date) {
+       date = date || today;
+       return tl.daysInMonth(date).reduce(function(spentInMonth, currentDate) {
+         return spentInMonth + calculateDailySpent(currentDate);
+       }, 0);
+     };
+     function calculatePeriodSpent(startDate, endDate) {
+       return tl.daysInPeriod(startDate, endDate).reduce(function(spentInPeriod, currentDate) {
+         return spentInPeriod + calculateDailySpent(currentDate);
+       }, 0);
+     };
 
-          if (transactionDate.toDateString() == today.toDateString()) {
-            dailySpent += transaction.amount;
-          }
-          if (transactionDate.getMonth() == today.getMonth()) {
-            monthlySpent += transaction.amount;
-          }
-          var begOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay() + 1); // Plus 1 to make beg of week Monday
-          var endOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + (7 - today.getDay()), 0, 0, -1);
-          if (transactionDate >= begOfWeek && transactionDate <= endOfWeek) {
-            weeklySpent += transaction.amount;
-          }   
-        },
-        
-        unregisterTransaction: function(transaction) {
-          var transactionIdIdx = transactionIds.indexOf(transaction._id)
-          if (!transaction.date || transactionIdIdx < 0) return;
-          
-          transactionIds.splice(transactionIdIdx, 1);
-          
-          var today = new Date();
-          var transactionDate = new Date(transaction.date);
+     var dailySpendable = 0;
+     var weeklySpendable = 0;
+     var monthlySpendable = 2000;
 
-          if (transactionDate.toDateString() == today.toDateString()) {
-            dailySpent -= transaction.amount;
-          }
-          if (transactionDate.getMonth() == today.getMonth()) {
-            monthlySpent -= transaction.amount;
-          }
-          var begOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay() + 1); // Plus 1 to make beg of week Monday
-          var endOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + (7 - today.getDay()), 0, 0, -1);
-          if (transactionDate >= begOfWeek && transactionDate <= endOfWeek) {
-            weeklySpent -= transaction.amount;
-          }
-        }
-      };
-    }]);
+     function calculateDailySpendable(date) {
+       date = date || today;
+       var daysRemaining = tl.daysLeftInMonth(date);
+       return (monthlySpendable - (calculateMonthlySpent(date) -  calculateDailySpent(date))) / daysRemaining;
+     };
+     function calculateWeeklySpendable(date) {
+       date = date || today;
+       var weeksRemaining = tl.weeksLeftInMonth(date);
+       if (date.getMonth() != tl.endOfWeek(date).getMonth()
+           || date.getMonth() != tl.startOfWeek(date).getMonth()) {
+         // This date is the last week of month.
+         // || This date is the first week of month
+         var daysRemainingLastMonth = tl.daysLeftInMonth(tl.startOfWeek(date));
+         var dailySpendableAtBegOfWeekForLastMonth = (monthlySpendable - (calculateMonthlySpent(tl.startOfWeek(date)) -  calculatePeriodSpent(tl.startOfWeek(date), tl.endOfMonth(tl.startOfWeek(date))))) / daysRemainingLastMonth;
+         var firstDayOfNextMonth = tl.startOfMonth(tl.endOfWeek(date));
+         var daysRemainingNextMonth = tl.daysLeftInMonth(firstDayOfNextMonth);
+         var dailySpendableAtBegOfNextMonth = (monthlySpendable - (calculateMonthlySpent(firstDayOfNextMonth) - calculatePeriodSpent(firstDayOfNextMonth, tl.endOfWeek(date)))) / daysRemainingNextMonth;
+         return ((dailySpendableAtBegOfWeekForLastMonth * tl.daysLeftInMonth(tl.startOfWeek(date))) + (dailySpendableAtBegOfNextMonth * tl.daysLeftInWeek(firstDayOfNextMonth)));
+       }
+
+       var daysRemaining = tl.daysLeftInMonth(tl.startOfWeek(date));
+       return ((monthlySpendable - (calculateMonthlySpent(date) -  calculateWeeklySpent(date))) / daysRemaining) * 7;
+     };
+     //     function calculateMonthlySpendable(date) {
+     //       date = date || today;
+     //       return monthlySpendable;
+     //     };
+
+     function recalculateSpent(date) {
+       date = date || today;
+       dailySpent = calculateDailySpent(date);
+       weeklySpent = calculateWeeklySpent(date);
+     };
+     function recalculateSpendable(date) {
+       date = date || today;
+       monthlySpent = calculateMonthlySpent(date);
+       dailySpendable = calculateDailySpendable(date);
+       weeklySpendable = calculateWeeklySpendable(date);
+     };
+
+     // Init()
+     recalculateSpent();
+     recalculateSpendable();
+
+     return {
+       setMonthlySpendable: function(calculatedSpendable) {
+         monthlySpendable = calculatedSpendable;
+         recalculateSpendable();
+       },
+
+       getDailySpent: function() {return dailySpent; },
+       getWeeklySpent: function() {return weeklySpent; },
+       getMonthlySpent: function() {return monthlySpent; },
+
+       getDailySpendable: function() { return dailySpendable; },
+       getWeeklySpendable: function() { return weeklySpendable; },
+       getMonthlySpendable: function() { return monthlySpendable; },
+
+       registerTransaction: function(transaction) {
+         var transactionDate = new Date(transaction.date);
+         if (!transactions.has(transactionDate.toDateString()))
+           transactions.set(transactionDate.toDateString(), []);
+         if (!transactions.get(transactionDate.toDateString()).some(function(savedTransaction) {
+           return savedTransaction._id == transaction._id;
+         })) {
+           transactions.get(transactionDate.toDateString()).push(transaction);
+         }
+         
+         recalculateSpent();
+         recalculateSpendable();
+       },
+
+       unregisterTransaction: function(transaction) {
+         var transactionDateStr = (new Date(transaction.date)).toDateString();
+         if (!transactions.has(transactionDateStr)) return;
+         var transactionIndex = -1;
+         transactionArray = transactions.get(transactionDateStr);
+         transactionArray.some(function(currentTransaction, index) {
+           if (transaction._id == currentTransaction._id) {
+             transactionIndex = index;
+             return true;
+           }
+           return false;
+         });
+         if (transactionIndex >= 0) {
+           transactionArray.splice(transactionIndex, 1);
+         }
+
+         recalculateSpent();
+         recalculateSpendable();
+       }
+     };
+   }]);

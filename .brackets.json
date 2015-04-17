@@ -7,5 +7,10 @@
       "linting.prefer": "JSHint",
       "linting.usePreferredOnly": true
     }
-  }
+  },
+  "jwolfe.file-tree-exclude.list": [
+        "node_modules",
+        "bower_components",
+        ".git"
+    ]
 }
