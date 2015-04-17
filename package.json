@@ -16,7 +16,8 @@
     "build": "npm run build:scripts -s && npm run build:styles -s && npm run build:markup -s",
     
     "build:scripts": "browserify -t debowerify -d source/scripts/cloudbudget.js  > public/main.js",
-    "build:styles": "node-sass source/styles/index.scss -o build && cleancss -o public/main.min.css bower_components/bootstrap/dist/css/bootstrap.css build/*.css --source-map",
+    "prebuild:styles": "mkdir -p public/assets/bootstrap && ncp bower_components/bootstrap/dist/ public/assets/bootstrap/",
+    "build:styles": "node-sass source/styles/index.scss -o build && cleancss -o public/main.min.css build/*.css",
     "postbuild:styles": "rimraf build",
     "build:markup": "ncp source/markup/ public/",
     
