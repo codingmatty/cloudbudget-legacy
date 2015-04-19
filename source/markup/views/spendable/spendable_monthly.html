@@ -1,10 +1,14 @@
 <div ng-controller="SpendableController as sCtrlrMonthly">
   <div class="panel panel-primary">
-    <div class="panel-heading">Monthly Spendable</div>
-    Monthly Spendable: {{sCtrlrMonthly.monthlySpendable() | currency}}
-    <br>
-    Monthly Spent: {{sCtrlrMonthly.monthlySpent() | currency}}
-    <br>
-    Monthly Remaining: {{sCtrlrMonthly.monthlyRemaining() | currency}}
+    <div class="panel-heading">
+      <h3 class="panel-title">Monthly Spendable</h3>
+    </div>
+    <div class="panel-body">
+      Monthly Spendable: {{sCtrlrMonthly.monthlySpendable() | currency}}
+      <br>
+      Monthly Spent: {{sCtrlrMonthly.monthlySpent() | currency}}
+      <br>
+      Monthly Remaining: {{sCtrlrMonthly.monthlyRemaining() | currency}}
+    </div>
   </div>
 </div>

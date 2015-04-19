@@ -1,10 +1,12 @@
 <div ng-controller="TransactionsController as tCtrlr"
      class="panel panel-primary" >
   <div class="panel-heading">
-    Transactions
+    <h3 class="panel-title">Transactions</h3>
     <a class="pull-right" ng-click="tCtrlr.createTransaction()">
       <span id="add-transaction-icon" class="glyphicon glyphicon-plus"></span>
     </a>
   </div>
-  <ng-include src="tCtrlr.getCurrentView()" />
+  <div class="panel-body">
+    <ng-include src="tCtrlr.getCurrentView()" />
+  </div>
 </div>
