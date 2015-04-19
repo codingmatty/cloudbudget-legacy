@@ -1,14 +1,14 @@
 <div class="table-responsive">
   <table class="table table-condensed">
     <colgroup>
-      <col style="width:12%;" />
+      <col style="width:13%;" />
       <col style="width:25%;" />
       <col style="width:12%;" />
       <col style="width:16%;" />
-      <col style="width:5%;" />
+      <col style="width:4%;" />
       <col style="width:16%;" />
-      <col style="width:7%;" />
-      <col style="width:7%;" />
+      <col style="width:6%;" />
+      <col style="width:6%;" />
     </colgroup>
     <thead>
       <th class="text-center">Date</th>
@@ -71,12 +71,12 @@
         </td>
         <td class="text-center">
           <button type="submit" class="btn btn-default" 
-                  ng-click="tCtrlr.listTransactions()">
+                  ng-click="tCtrlr.cancelForm()">
             Cancel
           </button>
         </td>
       </tr>
-      <tr ng-repeat="transaction in tCtrlr.transactions | orderBy:'-date'">
+      <tr ng-repeat="transaction in tCtrlr.transactions | orderBy:tCtrlr.orderTransactions">
         <td class="text-center">{{transaction.date | date}}</td>
         <td class="text-center">{{transaction.payee}}</td>
         <td class="text-center">{{transaction.amount | currency}}</td>
