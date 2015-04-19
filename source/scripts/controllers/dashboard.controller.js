@@ -5,6 +5,10 @@ angular.module('CloudBudget')
    function(viewUri, $routeParams, $location, Restangular, SpendingService) {
      var vm = this;
      
+     vm.getPlanView = function() {
+       return viewUri + "planning/planning.html"
+     }
+     
      vm.getDailySummaryView = function() {
        return viewUri + "spendable/spendable_daily.html";
      };

@@ -13,31 +13,22 @@ angular.module('CloudBudget')
      // endregion
 
      // region Public Variables
-     vm.monthlyIncome = 0;
-     vm.monthlySavings = 0;
-     vm.monthlyBills = [];
-     vm.currentBill = {};
+     vm.currentPlan = {};
      // endregion
      // endregion
 
      // region Functions
      // region Private Functions
-     billsCost = function(bills) { bills.reduce(function(x,y) { return x.amount + y.amount; }); };
+     vm.calculateSpendable = function(plan) {
+       return (plan.monthlyIncome || 0)
+              - (plan.monthlyBills || 0)
+              - (plan.monthlySavings || 0);
+     };
      // endregion
 
      // region Public functions
-     vm.monthlySpendable = function() {
-       return vm.monthlyIncome
-              - billsCost(vm.monthlyBills)
-              - vm.monthlySavings;
-     };
-     
-     vm.addBill = function(bill) {
-       vm.monthlyBills.push(bill);
-     };
-     
      vm.savePlan = function(plan) {
-       
+       SpendingService.setMonthlySpendable(vm.calculateSpendable(plan));
      };
      // endregion
      // endregion
