@@ -25,6 +25,7 @@ var port = process.env.PORT || 9090;        // set our port
 // MODEL ROUTES
 // =============================================================================
 var transactionRouter = require('./routes/transactions');
+var planRouter = require('./routes/plan');
 
 // REGISTER ROUTES -------------------------------
 app.use(express.static(path.resolve(__dirname + '/../public')));
@@ -37,6 +38,7 @@ app.use(function(req, res, next) {
     next(); // Make sure we go to the next routes and don't stop here
 });
 app.use('/api/v1/transactions', transactionRouter);
+app.use('/api/v1/plan', planRouter);
 app.use('/*', function(req, res) {
   res.sendFile(path.resolve(__dirname + '/../public/index.html'));
 });

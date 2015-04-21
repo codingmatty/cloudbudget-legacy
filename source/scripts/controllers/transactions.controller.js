@@ -131,7 +131,7 @@ angular.module('CloudBudget')
 
      vm.saveTransaction = function(transaction) {
        if (transaction._id) {
-         transactionsRest.customPUT(transaction, transaction._id).then(function(one) {
+         transactionsRest.doPUT(transaction, transaction._id).then(function() {
            vm.transactions.push(transaction);
            SpendingService.registerTransaction(transaction);
          });
