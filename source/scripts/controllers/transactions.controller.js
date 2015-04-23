@@ -1,8 +1,8 @@
 angular.module('CloudBudget')
   .controller(
   'TransactionsController', 
-  ['viewUri', '$routeParams', '$location', 'Restangular', 'matchmedia', 'SpendingService',
-   function(viewUri, $routeParams, $location, Restangular, matchmedia, SpendingService) {
+  ['viewUri', '$routeParams', '$location', 'Restangular', 'matchmedia', 'SpendingService', 'X2JS',
+   function(viewUri, $routeParams, $location, Restangular, matchmedia, SpendingService, x2js) {
      var vm = this;
 
      // region Variables
@@ -149,6 +149,10 @@ angular.module('CloudBudget')
      vm.orderTransactions = function(transaction) {
        return -(new Date(transaction.date).getTime());
      };
+     
+     vm.uploadXmlFile = function(xmlFile) {
+       console.log(x2js.xml_str2json(xmlFile));
+     }
      // endregion
      // endregion
 

@@ -4,6 +4,8 @@ require('angular-route');
 require('angular-ui-bootstrap-bower');
 require('restangular');
 require('matchmedia-ng');
+window.X2JS = require('x2js');
+require('angular-xml');
 
 if(!Array.prototype.find) {
   Array.prototype.find = function(callback) {
@@ -21,7 +23,7 @@ if(!Array.prototype.find) {
   }
 }
 
-angular.module('CloudBudget', ['ngRoute','restangular','ui.bootstrap','matchmedia-ng']);
+angular.module('CloudBudget', ['ngRoute','restangular','ui.bootstrap','matchmedia-ng', 'xml']);
 
 require('./cloudbudget.config.js');
 require('./common');

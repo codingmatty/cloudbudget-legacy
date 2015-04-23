@@ -85,7 +85,7 @@ router.route('')
  *   startdate - earliest date of transaction to return
  *   enddate - latest date of transaction to return
  */
-  .get(getTransaction)
+  .get(getTransactions)
 // POST /api/transactions
   .post(createTransaction);
 

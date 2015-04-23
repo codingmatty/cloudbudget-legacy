@@ -4,7 +4,7 @@ angular.module('CloudBudget')
   [ 'TimelineService',
    function(TimelineService) {
      var tl = TimelineService;
-     var today = new Date(2015, 3, 1);
+     var today = tl.today;
      var transactions = new Map();
 
      var dailySpent = 0;

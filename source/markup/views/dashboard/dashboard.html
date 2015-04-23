@@ -1,12 +1,16 @@
 <div ng-controller="DashboardController as dashboardvm">
-  <ng-include src="dashboardvm.getPlanView()"
-              class="col-md-12" ></ng-include>
-  <ng-include src="dashboardvm.getWeeklySummaryView()" 
-              class="col-md-4" ></ng-include>
-  <ng-include src="dashboardvm.getDailySummaryView()"
-              class="col-md-4" ></ng-include>
-  <ng-include src="dashboardvm.getMonthlySummaryView()" 
-              class="col-md-4" ></ng-include>
+  <div class="col-md-6">
+    <ng-include src="dashboardvm.getWeeklySummaryView()" 
+                class="col-md-12" ></ng-include>
+    <ng-include src="dashboardvm.getDailySummaryView()"
+                class="col-md-12" ></ng-include>
+    <ng-include src="dashboardvm.getMonthlySummaryView()" 
+                class="col-md-12" ></ng-include>
+  </div>
+  <div class="col-md-6">
+    <ng-include src="dashboardvm.getPlanView()"
+                class="col-md-12" ></ng-include>
+  </div>
   <ng-include src="dashboardvm.getTransactionsView()" 
               class="col-md-12" ></ng-include>
 </div>
