@@ -109,11 +109,17 @@ angular.module('CloudBudget')
          if (!transactions.has(transactionDate.toDateString()))
            transactions.set(transactionDate.toDateString(), []);
          if (!transactions.get(transactionDate.toDateString()).some(function(savedTransaction) {
-           return savedTransaction._id == transaction._id;
+           if (savedTransaction._id == transaction._id) {
+             savedTransaction.date = transaction.date;
+             savedTransaction.amount = transaction.amount;
+             savedTransaction.tag = transaction.tag;
+             return true;
+           }
+           return false;
          })) {
            transactions.get(transactionDate.toDateString()).push(transaction);
          }
-         
+
          recalculateSpent();
          recalculateSpendable();
        },
