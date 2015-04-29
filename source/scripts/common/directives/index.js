@@ -1,0 +1,1 @@
+require('./readFile.directive.js');

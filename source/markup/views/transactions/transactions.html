@@ -1,13 +1,17 @@
-<div ng-controller="TransactionsController as tCtrlr"
+<div ng-controller="TransactionsController as transactionVm"
      class="panel panel-primary" >
   <div class="panel-heading">
     <h3 class="panel-title">Transactions
-      <a class="pull-right" ng-click="tCtrlr.createTransaction()">
-        <span id="add-transaction-icon" class="glyphicon glyphicon-plus"></span>
-      </a>
+      <div class="pull-right">
+        <button class="btn btn-default btn-xs hidden-xs hidden-sm"
+                ng-click="transactionVm.openImportModal()">Import...</button>
+        <a class="btn btn-primary btn-xs" ng-click="transactionVm.createTransaction()">
+          <span id="add-transaction-icon" class="glyphicon glyphicon-plus"></span>
+        </a>
+      </div>
     </h3>
   </div>
   <div class="panel-body">
-    <ng-include src="tCtrlr.getCurrentView()" />
+    <ng-include src="transactionVm.getCurrentView()" />
   </div>
 </div>

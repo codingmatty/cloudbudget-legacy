@@ -1,63 +1,62 @@
-<form name="transactionForm" class="form" novalidate>
+<div class="form-horizontal">
   <div class="form-group">
-    <label for="date" class="control-label">Date:</label>
-    <input type="date" name="date" 
-           ng-model="tCtrlr.currentTransaction.date" 
-           class="form-control" />
+    <label for="date" class="col-sm-3 control-label">Date</label>
+    <div class="col-sm-9">
+      <input type="date" name="date" 
+             ng-model="transactionVm.currentTransaction.date" 
+             class="form-control" />
+    </div>
   </div>
-
   <div class="form-group">
-    <label for="payee" class="control-label">Payee:</label>
-    <input type="text" name="payee" 
-           ng-model="tCtrlr.currentTransaction.payee" 
-           class="form-control" />
+    <label for="payee" class="col-sm-3 control-label">Payee</label>
+    <div class="col-sm-9">
+      <input type="text" name="payee" 
+             ng-model="transactionVm.currentTransaction.payee" 
+             class="form-control" 
+             placeholder="Payee"/>
+    </div>
   </div>
-
   <div class="form-group">
-    <label for="amount" class="control-label">Amount:</label>
-    <input type="number" name="amount" 
-           ng-model="tCtrlr.currentTransaction.amount" 
-           class="form-control" />
+    <label for="amount" class="col-sm-3 control-label">Amount</label>
+    <div class="col-sm-9">
+      <div class="input-group">
+        <span class="input-group-addon">$</span>
+        <input type="number" name="amount" 
+               ng-model="transactionVm.currentTransaction.amount" 
+               class="form-control" 
+               placeholder="0.00"/>
+      </div>
+    </div>
   </div>
-
   <div class="form-group">
-    <label for="account" class="control-label">Account:</label>
-    <input type="text" name="account" 
-           ng-model="tCtrlr.currentTransaction.account" 
-           class="form-control" />
+    <label for="account" class="col-sm-3 control-label">Account</label>
+    <div class="col-sm-9">
+      <input type="text" name="account" 
+             ng-model="transactionVm.currentTransaction.account" 
+             class="form-control"
+             placeholder="Account"/>
+    </div>
   </div>
-
-  <div class="checkbox">
-    <label class="">
+  <div class="form-group">
+    <label for="cleared" class="col-sm-3 control-label">Cleared</label>
+    <div class="col-sm-9">
       <input type="checkbox" name="cleared" 
-             ng-model="tCtrlr.currentTransaction.cleared"
-             class="" /> Cleared
-    </label>
+             ng-model="transactionVm.currentTransaction.cleared" />
+    </div>
   </div>
-
   <div class="form-group">
-    <label class="radio-inline">
-      <input type="radio" name="tag-count" value="count"
-             ng-model="tCtrlr.currentTransaction.tag" 
-             class="btn btn-primary" />
-      Count
-    </label>
-    <label class="radio-inline">
-      <input type="radio" name="tag-dontcount" value="dontcount" 
-             ng-model="tCtrlr.currentTransaction.tag" 
-             class="btn btn-primary" />
-      Don't Count
-    </label>
-    <label class="radio-inline">
-      <input type="radio" name="tag-bill" value="bill" 
-             ng-model="tCtrlr.currentTransaction.tag" 
-             class="btn btn-primary" />
-      Bill
-    </label>
+    <label for="tag" class="col-sm-3 control-label">Tag</label>
+    <div class="col-sm-9">
+      <select id="tag" class="form-control" ng-model="transactionVm.currentTransaction.tag">
+        <option value="count">Count</option>
+        <option value="dontcount">Don't Count</option>
+        <option value="bill">Bill</option>
+        <option value="credit">Credit</option>
+      </select>
+    </div>
   </div>
-
-  <button type="submit" class="btn btn-default" 
-          ng-click="tCtrlr.saveTransaction(tCtrlr.currentTransaction)">
-    Submit
-  </button>
-</form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="transactionVm.saveTransaction(transactionVm.currentTransaction)">Save</button>
+  <button class="btn btn-warning" ng-click="transactionVm.cancelForm()">Cancel</button>
+</div>
