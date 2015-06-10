@@ -17,7 +17,7 @@ Cloud Budget is a Free and Open Source self-hostable budget management tool, ins
 * `npm run dev`
 
 ## Script Commands
----
+
 * npm run
   * clean - removes public folder
   * build
