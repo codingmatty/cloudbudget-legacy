@@ -43,8 +43,8 @@ Cloud Budget is a Free and Open Source self-hostable budget management tool, ins
 * Transactions can be added, edited and deleted.
 * Monthly spendable plan can be changed.
 * View amount spendable today, this week and this month.
-* Plan persistance.
-* Transaction persistance.
+* Plan persistence.
+* Transaction persistence.
 
 ## Roadmap
 ---
