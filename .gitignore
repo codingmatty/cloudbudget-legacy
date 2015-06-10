@@ -1,3 +1,12 @@
 /node_modules/
 /bower_components/
 /public/
+/.brackets.json
+/db/storage.bson
+/db/mongod.lock
+/db/local.ns
+/db/local.0
+/db/journal/
+/db/cloudbudget.ns
+/db/cloudbudget.0
+/db/_tmp/

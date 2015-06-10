@@ -20,12 +20,12 @@ mongoose.connect('mongodb://localhost:' + dbport + '/cloudbudget');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 9090;        // set our port
+var port = process.env.PORT || process.env.npm_package_config_server_port;        // set our port
 
 // MODEL ROUTES
 // =============================================================================
-var transactionRouter = require('./routes/transactions');
-var planRouter = require('./routes/plan');
+var transactionRouter = require('./routers/transaction');
+var planRouter = require('./routers/plan');
 
 // REGISTER ROUTES -------------------------------
 app.use(express.static(path.resolve(__dirname + '/../public')));

@@ -22,6 +22,14 @@ angular.module('CloudBudget')
 
      // region Functions
      // region Private Functions
+     function setCurrentTransaction(transaction) {
+       vm.currentTransaction = transaction;
+       if (transaction) {
+         if (transaction.date) {
+           vm.currentTransaction.date = new Date(transaction.date);
+         }
+       }
+     }
      function init() {
        // Initialize Restangular object and populate transactions
        transactionsRest = Restangular.all('transactions');
@@ -47,17 +55,8 @@ angular.module('CloudBudget')
        } else {
          vm.listTransactions();
        }
-     };
+     }
 
-     function setCurrentTransaction(transaction) {
-       vm.currentTransaction = transaction;
-       if (transaction) {
-         if (transaction.date) {
-           vm.currentTransaction.date = new Date(transaction.date);
-         }
-       }
-     };
-     
      function copyTransaction(transaction) {
        var newTransaction = {};
        newTransaction._id = transaction._id;
@@ -76,7 +75,7 @@ angular.module('CloudBudget')
      vm.getCurrentView = function() {
        return viewUri + 'transactions/partials/' + currentView + '.partial.html';
      };
-     
+
      vm.createTransaction = function() {
        setCurrentTransaction({cleared: false});
        originalTransaction = null;
@@ -87,13 +86,13 @@ angular.module('CloudBudget')
          vm.showFormRow = true;
        }
      };
-     
+
      vm.listTransactions = function() {
        currentView = 'list';
        vm.showFormRow = false;
        originalTransaction = null;
      };
-     
+
      vm.showTransaction = function(transaction) {
        setCurrentTransaction(transaction);
        if (!matchmedia.isDesktop()) {
@@ -113,7 +112,7 @@ angular.module('CloudBudget')
          });
        }
      };
-     
+
      vm.editTransaction = function(transaction) {
        setCurrentTransaction(transaction);
        originalTransaction = copyTransaction(transaction);
@@ -128,7 +127,7 @@ angular.module('CloudBudget')
          vm.showFormRow = true;
        }
      };
-     
+
      vm.saveTransaction = function(transaction) {
        if (transaction._id) {
          transactionsRest.doPUT(transaction, transaction._id).then(function() {
@@ -145,7 +144,7 @@ angular.module('CloudBudget')
        setCurrentTransaction({});
        vm.listTransactions();
      };
-     
+
      vm.deleteTransaction = function(transaction) {
        if (confirm('Are you sure you want to delete this transaction?!')) {
          transaction.customDELETE(transaction._id).then(function() {
@@ -155,7 +154,7 @@ angular.module('CloudBudget')
          });
        }
      };
-     
+
      vm.cancelForm = function() {
        if (originalTransaction) {
          vm.transactions.push(originalTransaction);

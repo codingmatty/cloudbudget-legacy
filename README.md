@@ -1,22 +1,70 @@
-Requirements:
+# Cloud Budget
+---
+Cloud Budget is a Free and Open Source self-hostable budget management tool, inspired by some apps I have tried to use in the past.
 
-Node
-npm
-bower - npm install -g bower
-grunt-cli - npm install -g grunt-cli
+## Requirements
+---
+* node.js
+* npm
+* bower - [`npm install -g bower`]
+* mongodb
+ * configure db port: package.json > config > mongodb > port
 
-mongodb
-- database: server/server.js line 13
-- grunt-easy-mongo-fixture module
+## Setup
+---
+* `npm install`
+* `bower install`
+* `npm run dev`
 
-setup:
-    npm install
-    bower install
-    grunt easy_mongo_fixture:load
-    grunt (starts express and opens browser)
-    - grunt build:development (watches for new file changes and reloads browser in scripts folder)
-    
+## Script Commands
+---
+* npm run
+ * clean - removes public folder
+ * build
+   * build:scripts
+   * build:styles
+   * build:markup
+ * test - (does nothing yet)
+ * watch:test - (does nothing yet)
+ * watch
+ * watch:build
+   * watch:build:scripts
+   * watch:build:styles
+   * watch:build:markup
+ * open:dev
+ * db:serve - db:start, serve
+ * db:start
+ * serve
+ * live-reload
+ * dev - open:dev, watch, love-reload, db:start, serve
 
-Notes:
-    database folder holds seed data for mongo database
-    bower installs go into /public/lib/bower folder
+## Features
+---
+* Transactions can be added, edited and deleted.
+* Monthly spendable plan can be changed.
+* View amount spendable today, this week and this month.
+* Plan persistance.
+* Transaction persistance.
+
+## Roadmap
+---
+* Move controller REST functions to an angular service.
+* Be able to import transaction files (and maybe one day, directly from bank..).
+* Add settings that will be persisted on the server and delivered to front-end app.
+* Be able to use last months income in spendable, instead of plan result (setting).
+* Create bills as scheduled transactions that will be used in the plan.
+* Add trackers/categories to be able to monitor spending.
+* Add graphs (i.e. pie graphs of categories, line graphs of account balances, etc.).
+* Add receipts to transactions.
+* Layout will be updated for better experience and more appealing look.
+* Accounts will be added to link transactions and track balance.
+* Transactions will be queryable and filterable.
+
+## Changelog
+---
+See [CHANGELOG](https://github.com/swengmatt/cloudbudget/blob/master/CHANGELOG.md) for details.
+
+## License
+---
+Copyright (c) 2015 Matthew Jacobs.
+See [LICENSE](https://github.com/swengmatt/cloudbudget/blob/master/LICENSE.md) for details.

@@ -1,5 +1,4 @@
-angular.module('CloudBudget')
-  .directive('onReadFile', function ($parse) {
+function onReadFileDirective ($parse) {
   return {
     restrict: 'A',
     scope: false,
@@ -19,4 +18,6 @@ angular.module('CloudBudget')
       });
     }
   };
-});
+}
+
+angular.module('CloudBudget').directive('onReadFile', ['$parse', onReadFileDirective]);

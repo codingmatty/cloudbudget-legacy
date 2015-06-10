@@ -6,8 +6,8 @@ angular.module('CloudBudget')
      var vm = this;
      
      vm.getPlanView = function() {
-       return viewUri + "planning/planning.html"
-     }
+       return viewUri + "planning/planning.html";
+     };
      
      vm.getDailySummaryView = function() {
        return viewUri + "spendable/spendable_daily.html";

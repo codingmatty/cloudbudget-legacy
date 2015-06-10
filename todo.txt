@@ -1,2 +1,0 @@
-- Use mViewer when needing to edit mongodb
-

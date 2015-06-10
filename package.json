@@ -4,6 +4,10 @@
   "description": "A simple Budgeting Web App",
   "main": "index.js",
   "config": {
+    "server": {
+      "port": "9090",
+      "reloadport": "9091"
+    },
     "mongodb": {
       "dbpath": "db",
       "port": "30000"
@@ -11,6 +15,7 @@
   },
   "scripts": {
     "clean": "rimraf public/*",
+    
     "prebuild": "npm run clean -s",
     "build": "npm run build:scripts -s && npm run build:styles -s && npm run build:markup -s",
     "build:scripts": "browserify -t debowerify -d source/scripts/cloudbudget.js  > public/main.js",
@@ -18,36 +23,40 @@
     "build:styles": "node-sass source/styles/index.scss -o build && cleancss -o public/main.min.css build/*.css",
     "postbuild:styles": "rimraf build",
     "build:markup": "ncp source/markup/ public/",
+    
     "test": "karma start --singleRun",
     "watch:test": "karma start",
     "watch": "npm run watch:build -s",
+    
     "prewatch:build": "npm run clean -s",
+    
     "watch:build": "parallelshell \"npm run watch:build:scripts\" \"npm run watch:build:styles\" \"npm run watch:build:markup\"",
     "watch:build:scripts": "watch 'npm run build:scripts' source/scripts",
     "watch:build:styles": "watch 'npm run build:styles' source/styles",
     "watch:build:markup": "watch 'npm run build:markup' source/markup",
+    
     "open:prod": "opener http://example.com",
     "open:stage": "opener http://staging.example.internal",
-    "open:dev": "opener http://localhost:9090",
+    "open:dev": "opener http://localhost:$npm_package_config_server_port",
+    
     "deploy:prod": "s3-cli sync ./public/ s3://example-com/prod-site/",
     "deploy:stage": "s3-cli sync ./public/ s3://example-com/stage-site/",
+    
     "db:serve": "parallelshell \"npm run db:start -s\" \"npm run serve -s\"",
     "db:start": "mongod --dbpath $npm_package_config_mongodb_dbpath --port $npm_package_config_mongodb_port",
+    
     "serve": "nodemon server/server.js",
-    "live-reload": "live-reload --port 9091 public/",
-    "dev": "npm run open:dev -s & parallelshell \"npm run watch -s\" \"npm run live-reload -s\" \"npm run db:start -s\" \"npm run serve -s\"",
-    "build:scripts-save": "browserify -d source/scripts/**/*.js -p [minifyify --compressPath . --map main.js.map --output public/main.js.map] | hashmark -n public/main.js -s -l 8 -m assets.json 'public/{name}{hash}{ext}'",
-    "build:styles-save": "node-sass --source-map source/styles/main.scss -o public/ && hashmark -s -l 8 -m assets.json public/main.css 'public/{name}{hash}{ext}'",
-    "build:markup-save": "jade source/markup/index.jade --obj assets.json -o public",
-    "watch-save": "parallelshell \"npm run watch:test -s\" \"npm run watch:build -s\"",
-    "serve-save": "http-server -p 9090 public/"
+    
+    "live-reload": "live-reload --port $npm_package_config_server_reloadport public/",
+    
+    "dev": "npm run open:dev -s & parallelshell \"npm run watch -s\" \"npm run live-reload -s\" \"npm run db:start -s\" \"npm run serve -s\""
   },
   "repository": {
     "type": "git",
-    "url": "https://git.majacobs.net/majacobs/cloudbudget.git"
+    "url": "https://github.com/swengmatt/cloudbudget.git"
   },
   "author": "Matthew Jacobs",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "latest",
     "express": "latest",

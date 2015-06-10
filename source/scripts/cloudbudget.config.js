@@ -4,7 +4,7 @@ angular.module('CloudBudget')
   * Constants Block
   */ 
 .constant('baseUrl', 'http://localhost:8081')
-.constant('apiUrl','http://localhost:8081/api/v1')
+.constant('apiUrl',  'http://localhost:8081/api/v1')
 .constant('viewUri', 'views/')
           
 /**

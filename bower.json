@@ -16,20 +16,20 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.3.13",
-    "angular-ui-bootstrap-bower": "~0.12.0",
-    "angular-ui-router": "~0.2.13",
-    "angular-ui-select": "~0.9.9",
-    "angular-ui-utils": "~0.2.2",
-    "mobile-angular-ui": "~1.2.0-beta.11",
-    "angular-route": "~1.3.13",
-    "restangular": "~1.4.0",
-    "matchmedia-ng": "~1.0.5",
-    "lodash": "~3.6.0",
-    "bootstrap": "~3.3.4"
+    "angular": "~1.3.16",
+    "angular-ui-bootstrap-bower": "latest",
+    "angular-ui-router": "latest",
+    "angular-ui-select": "latest",
+    "angular-ui-utils": "latest",
+    "mobile-angular-ui": "latest",
+    "angular-route": "latest",
+    "restangular": "latest",
+    "matchmedia-ng": "latest",
+    "lodash": "latest",
+    "bootstrap": "latest"
   },
   "resolutions": {
-    "angular": "~1.3.13",
-    "lodash": "~3.6.0"
+    "angular": "~1.3.16",
+    "lodash": "latest"
   }
 }
