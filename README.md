@@ -62,9 +62,9 @@ Cloud Budget is a Free and Open Source self-hostable budget management tool, ins
 
 ## Changelog
 
-See [CHANGELOG](https://github.com/swengmatt/cloudbudget/blob/master/CHANGELOG.md) for details.
+See [CHANGELOG](CHANGELOG.md) for details.
 
 ## License
 
 Copyright (c) 2015 Matthew Jacobs.
-See [LICENSE](https://github.com/swengmatt/cloudbudget/blob/master/LICENSE.md) for details.
+See [LICENSE](LICENSE.md) for details.
