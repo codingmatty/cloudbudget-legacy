@@ -1,0 +1,41 @@
+#!/usr/bin/env node
+/* global __dirname, process */
+
+var debug = require('debug')('cloudbudget');
+var nodemon = require('nodemon');
+var exec = require('child_process').exec;
+var spawn = require('child_process').spawn;
+
+var env = process.env.NODE_ENV || 'development';
+var server_port = process.env.PORT || 3000;
+
+nodemon({
+  script: __dirname + '/../server/server.js',
+});
+
+nodemon.on('start', function () {
+  debug('Express server listening on port ' + server_port);
+});
+
+var livereloadExec, buildExec, watchExec;
+
+if (env === 'development') {
+  livereloadExec = spawn('npm', ['run','livereload']);
+  livereloadExec.stdout.on('data', function (data) {
+    debug('livereload stdout: ' + data);
+  });
+  livereloadExec.stderr.on('data', function (data) {
+    debug('livereload stderr: ' + data);
+  });
+
+  buildExec = exec('npm run build', function (error, stdout, stderr) {
+    debug('build stdout: ' + stdout);
+    debug('build stderr: ' + stderr);
+    if (error !== null) {
+      debug('build error: ' + error);
+    }
+    console.log('Files Built');
+  });
+
+  watchExec = spawn('npm', ['run','watch'], { stdio: 'inherit' });
+}
