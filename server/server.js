@@ -1,3 +1,5 @@
+/* global __dirname, process */
+
 // server.js
 
 // BASE SETUP
@@ -11,7 +13,7 @@ var bodyParser = require('body-parser');
 
 var mongoose   = require('mongoose');
 
-var dbport = process.env.npm_package_config_mongodb_port;
+var dbport = process.env.DBPORT || 27017;
 
 mongoose.connect('mongodb://localhost:' + dbport + '/cloudbudget');
 
@@ -20,7 +22,7 @@ mongoose.connect('mongodb://localhost:' + dbport + '/cloudbudget');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || process.env.npm_package_config_server_port;        // set our port
+var port = process.env.PORT || 3000;        // set our port
 
 // MODEL ROUTES
 // =============================================================================
@@ -46,7 +48,8 @@ app.use('/*', function(req, res) {
 // START THE SERVER
 // =============================================================================
 
-app.listen(port);
-console.log('Your server is ready for you on port: ' + port);
+app.listen(port, function() {
+    console.log('Your server is ready for you on port: ' + port);
+});
 
 module.exports = app;
