@@ -4,23 +4,23 @@
       <col style="width:13%;" />
       <col style="width:23%;" />
       <col style="width:12%;" />
+      <col class="hidden-xs" style="width:15%;" />
+      <col class="hidden-xs" style="width:4%;" />
       <col style="width:15%;" />
-      <col style="width:4%;" />
-      <col style="width:15%;" />
-      <col style="width:6%;" />
-      <col style="width:6%;" />
-      <col style="width:6%;" />
+      <col class="hidden-xs" style="width:6%;" />
+      <col class="hidden-xs" style="width:6%;" />
+      <col class="hidden-xs" style="width:6%;" />
     </colgroup>
     <thead>
       <th class="text-center">Date</th>
       <th class="text-center">Payee</th>
       <th class="text-center">Amount</th>
-      <th class="text-center">Account</th>
-      <th class="text-center">Cleared</th>
+      <th class="text-center hidden-xs">Account</th>
+      <th class="text-center hidden-xs">Cleared</th>
       <th class="text-center">Tag</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th class="hidden-xs"></th>
+      <th class="hidden-xs"></th>
+      <th class="hidden-xs"></th>
     </thead>
     <tbody>
       <tr ng-show="transactionVm.showFormRow">
@@ -80,27 +80,27 @@
         <td class="text-center">{{transaction.date | date}}</td>
         <td class="text-center">{{transaction.payee}}</td>
         <td class="text-center">{{transaction.amount | currency}}</td>
-        <td class="text-center">{{transaction.account}}</td>
-        <td class="text-center"><input type="checkbox" style="height:100%;" ng-model="transaction.cleared" disabled></td>
+        <td class="text-center hidden-xs">{{transaction.account}}</td>
+        <td class="text-center hidden-xs"><input type="checkbox" style="height:100%;" ng-model="transaction.cleared" disabled></td>
         <td class="text-center">
           <div ng-switch="transaction.tag">
-            <button ng-switch-when="count" class="btn btn-danger btn-sm" style="width:50%;" disabled>Count</button>
-            <button ng-switch-when="dontcount" class="btn btn-default btn-sm" style="width:50%" disabled>Don't Count</button>
-            <button ng-switch-when="bill" class="btn btn-warning btn-sm" style="width:50%" disabled>Bill</button>
-            <button ng-switch-default class="btn btn-success btn-sm" style="width:50%" disabled>Credit</button>
+            <button ng-switch-when="count" class="btn btn-danger btn-xs" style="width:70%;" disabled>Count</button>
+            <button ng-switch-when="dontcount" class="btn btn-default btn-xs" style="width:70%" disabled>Don't Count</button>
+            <button ng-switch-when="bill" class="btn btn-warning btn-xs" style="width:70%" disabled>Bill</button>
+            <button ng-switch-default class="btn btn-success btn-xs" style="width:70%" disabled>Credit</button>
           </div>
         </td>
-        <td class="text-center">
+        <td class="text-center hidden-xs">
           <a ng-click="transactionVm.editTransaction(transaction)"> 
             <span class="glyphicon glyphicon-pencil"></span>
           </a>
         </td>
-        <td class="text-center">
+        <td class="text-center hidden-xs">
           <a ng-click="transactionVm.showTransaction(transaction)"> 
             <span class="glyphicon glyphicon-search"></span>
           </a>
         </td>
-        <td class="text-center">
+        <td class="text-center hidden-xs">
           <a ng-click="transactionVm.deleteTransaction(transaction)"> 
             <span class="glyphicon glyphicon-trash"></span>
           </a>
