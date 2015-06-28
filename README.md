@@ -1,44 +1,21 @@
 # Cloud Budget
 
+## Summary
+
 Cloud Budget is a Free and Open Source self-hostable budget management tool, inspired by some apps I have tried to use in the past.
+######Check out the [DEMO](http://cloudbudget.majacobs.net).
 
-## Requirements
+#### Concept
 
-* node.js
-* npm
-* bower - [`npm install -g bower`]
-* mongodb
- * configure db port: package.json > config > mongodb > port
+There is a monthly plan where you set the monthly income, how much you spend per month in bills, and how much you want to save per month. 
+Then you can see on the spendable views how much you have left to spend in the current month, week and day. 
+When you add a transaction, you can use 1 of the 4 tags: `count`, `don't count`, `bill`, and `credit`:
+* A transaction with the `count` tag counts toward your spendable (i.e. a normal transaction that is not a bill nor a credit).
+* A transaction with the `don't count` tag does not count toward your spendable (i.e. a transaction that you expect to get paid back for).
+* A transaction with the `bill` tag should be used if the transaction is already considered within the bill section of the monthly plan.
+* A transaction with the `credit` tag should be used for any incoming money; this will not affect the spendable in any way.
 
-## Setup
-
-* `npm install`
-* `bower install`
-* `npm run dev`
-
-## Script Commands
-
-* npm run
-  * clean - removes public folder
-  * build
-    * build:scripts
-    * build:styles
-    * build:markup
-  * test - (does nothing yet)
-  * watch:test - (does nothing yet)
-  * watch
-  * watch:build
-    * watch:build:scripts
-    * watch:build:styles
-    * watch:build:markup
-  * open:dev
-  * db:serve - db:start, serve
-  * db:start
-  * serve
-  * live-reload
-  * dev - open:dev, watch, love-reload, db:start, serve
-
-## Features
+#### Features
 
 * Transactions can be added, edited and deleted.
 * Monthly spendable plan can be changed.
@@ -46,7 +23,7 @@ Cloud Budget is a Free and Open Source self-hostable budget management tool, ins
 * Plan persistence.
 * Transaction persistence.
 
-## Roadmap
+#### Roadmap
 
 * Move controller REST functions to an angular service.
 * Be able to import transaction files (and maybe one day, directly from bank..).
@@ -60,11 +37,32 @@ Cloud Budget is a Free and Open Source self-hostable budget management tool, ins
 * Accounts will be added to link transactions and track balance.
 * Transactions will be queryable and filterable.
 
+## Getting Started
+
+#### Dependencies
+
+* [NodeJS](https://nodejs.org/download/)
+* npm
+* bower
+* mongo
+
+#### Setup
+
+* `git clone https://github.com/swengmatt/cloudbudget.git`
+* `cd cloudbudget`
+* `npm install (--production)`
+* `bower install`
+* Setup MongoDB:
+ * `mongo`
+ * `use cloudbudget`
+* `npm start` OR `npm run dev`
+* Open browser window to http://localhost:3000/
+
 ## Changelog
 
-See [CHANGELOG](https://github.com/swengmatt/cloudbudget/blob/master/CHANGELOG.md) for details.
+See [CHANGELOG](CHANGELOG) for details.
 
 ## License
 
 Copyright (c) 2015 Matthew Jacobs.
-See [LICENSE](https://github.com/swengmatt/cloudbudget/blob/master/LICENSE.md) for details.
+See [LICENSE](LICENSE) for details.
