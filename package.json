@@ -1,6 +1,6 @@
 {
   "name": "CloudBudget",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A simple Budgeting Web App",
   "main": "index.js",
   "scripts": {
