@@ -68,6 +68,8 @@ angular.module('CloudBudget')
        newTransaction.account = transaction.account;
        newTransaction.cleared = transaction.cleared;
        newTransaction.tag = transaction.tag;
+       
+       return newTransaction;
      }
      // endregion
 
