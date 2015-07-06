@@ -16,21 +16,21 @@ var buildExecCallback = function (buildType) {
   };
 };
 
-var buildScriptsExecChild = watch.createMonitor(__dirname + '/../source/scripts/', function (monitor) {
+var buildScriptsExecChild = watch.createMonitor(__dirname + '/../source/js/', function (monitor) {
   var onCb = function() { exec('npm run build:scripts', buildExecCallback('build:scripts')); }
   monitor.on("created", onCb);
   monitor.on("changed", onCb);
   monitor.on("removed", onCb);
 });
 
-var buildStylesExecChild = watch.createMonitor(__dirname + '/../source/styles/', function (monitor) {
+var buildStylesExecChild = watch.createMonitor(__dirname + '/../source/scss/', function (monitor) {
   var onCb = function() { exec('npm run build:styles', buildExecCallback('build:styles')); }
   monitor.on("created", onCb);
   monitor.on("changed", onCb);
   monitor.on("removed", onCb);
 });
 
-var buildMarkupExecChild = watch.createMonitor(__dirname + '/../source/markup/', function (monitor) {
+var buildMarkupExecChild = watch.createMonitor(__dirname + '/../source/html/', function (monitor) {
   var onCb = function() { exec('npm run build:markup', buildExecCallback('build:markup')); }
   monitor.on("created", onCb);
   monitor.on("changed", onCb);
