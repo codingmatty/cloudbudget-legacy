@@ -1,0 +1,20 @@
+{
+  "development": {
+    "host": "127.0.0.1",
+    "port": 27017,
+    "database": "cloudbudget_dev",
+    "username": "",
+    "password": "",
+    "name": "development",
+    "connector": "mongodb"
+  },
+  "production": {
+    "host": "127.0.0.1",
+    "port": 27017,
+    "database": "cloudbudget",
+    "username": "",
+    "password": "",
+    "name": "production",
+    "connector": "mongodb"
+  }
+}

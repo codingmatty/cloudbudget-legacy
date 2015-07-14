@@ -1,0 +1,52 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "development",
+    "public": false
+  },
+  "AccessToken": {
+    "dataSource": "development",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "development",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "development",
+    "public": false
+  },
+  "Role": {
+    "dataSource": "development",
+    "public": false
+  },
+  "Transaction": {
+    "dataSource": "development",
+    "public": true
+  },
+  "Plan": {
+    "dataSource": "development",
+    "public": true
+  },
+  "AccountHolder": {
+    "dataSource": "development",
+    "public": true
+  },
+  "Account": {
+    "dataSource": "development",
+    "public": true
+  }
+}
