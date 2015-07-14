@@ -1,0 +1,53 @@
+{
+  "name": "AccountHolder",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "Accounts": {
+      "type": "hasMany",
+      "model": "Account",
+      "foreignKey": "accountHolderId"
+    },
+    "Transactions": {
+      "type": "hasMany",
+      "model": "Transaction",
+      "foreignKey": "accountHolderId"
+    },
+    "Plan": {
+      "type": "hasOne",
+      "model": "Plan",
+      "foreignKey": "accountHolderId"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
+      "property": "create"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": []
+}
