@@ -55,6 +55,7 @@ When you add a transaction, you can use 1 of the 4 tags: `count`, `don't count`,
 * Setup MongoDB:
  * `mongo`
  * `use cloudbudget_dev`
+* `webpack`
 * `node .`
 * Open browser window to http://localhost:3000/
 
