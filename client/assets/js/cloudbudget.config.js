@@ -1,28 +1,16 @@
 (function (angular) {
 
-  var checkLoggedin = function ($q, $timeout, $http, $location, $rootScope, AdminService) {
+  var checkLoggedin = function ($q, $timeout, $http, $location, $rootScope, UserService) {
     // Initialize a new promise
     var deferred = $q.defer();
 
-    // Make an AJAX call to check if the user is logged in
-    $http.get('/loggedin').success(function (response) {
-      // Authenticated
-      if (response.authenticated)
-        /*$timeout(deferred.resolve, 0);*/
-        deferred.resolve();
-
-      // Not Authenticated
-      else {
-        AdminService.setUrlAfterLogin($location.url());
-        deferred.reject();
-        $location.url('/login');
-      }
-    }).error(function (err) {
-      AdminService.setUrlAfterLogin($location.url());
+    if (!UserService.LoggedIn()) {
       deferred.reject();
-      $location.url('/login');
-    });
-
+      $location.url('/');
+    } else {
+      deferred.resolve();
+    }
+    
     return deferred.promise;
   };
 
@@ -52,13 +40,22 @@
           controller: 'LoginController'
         }).when('/dashboard', {
           templateUrl: viewUri + 'dashboard/dashboard.html',
-          controller: 'DashboardController'
+          controller: 'DashboardController',
+          resolve: {
+            loggedin: checkLoggedin
+          }
         }).when('/transactions/:transactionId?', {
           templateUrl: viewUri + 'transactions/transactions.html',
-          controller: 'TransactionsController'
+          controller: 'TransactionsController',
+          resolve: {
+            loggedin: checkLoggedin
+          }
         }).when('/transactions/:transactionId/edit', {
           templateUrl: viewUri + 'transactions/transactions.html',
-          controller: 'TransactionsController'
+          controller: 'TransactionsController',
+          resolve: {
+            loggedin: checkLoggedin
+          }
         }).otherwise({
           redirectTo: '/'
         });

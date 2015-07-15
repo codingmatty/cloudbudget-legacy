@@ -4,6 +4,8 @@ require('./dashboard/dashboard.controller.js');
 
 require('./login/login.controller.js');
 
+require('./nav/nav.controller.js');
+
 require('./planning/plan.service.js');
 require('./planning/planning.controller.js');
 

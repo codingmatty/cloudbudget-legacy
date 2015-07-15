@@ -3,18 +3,18 @@
 		var AccountService = this;
 
 		AccountService.getAccounts = function (queryObj, cb) {
-			AccountHolder.Accounts({ id: AccountHolder.id, filter: queryObj }).$promise.then(function (accounts) {
+			AccountHolder.Accounts({ id: AccountHolder.getCurrentId(), filter: queryObj }).$promise.then(function (accounts) {
 				if (cb) cb(accounts);
 			});
 		};
 
 		AccountService.saveAccount = function (account, cb) {
 			if (account.id) {
-				AccountHolder.Transactions.updateById({ id: AccountHolder.id, fk: account.id }, account, function (resAccount) {
+				AccountHolder.Transactions.updateById({ id: AccountHolder.getCurrentId(), fk: account.id }, account, function (resAccount) {
 					if (cb) cb(resAccount);
 				});
 			} else {
-				AccountHolder.Transactions.create({ id: AccountHolder.id }, account, function (resAccount) {
+				AccountHolder.Transactions.create({ id: AccountHolder.getCurrentId() }, account, function (resAccount) {
 					if (cb) cb(resAccount);
 				});
 			}

@@ -1,9 +1,27 @@
 module.exports = function (app) {
   var AccountHolder = app.models.AccountHolder;
 
+  var addAccounts = function (ah, accName) {
+    ah.Accounts.findOne({ where: { name: accName } }, function (err, account) {
+      if (err || account) return;
+
+      ah.Accounts.create({ name: accName }, function (err, account) {
+        if (err) throw err;
+
+        console.log('Created account:', account);
+      });
+    });
+  };
+
   AccountHolder.find({ where: { email: 'demo@demo.com' } }, function (err, ah) {
-    if (err || (ah.length > 0 && ah[0].id)) return;
-    
+    if (err || (ah && ah.length > 0 && ah[0].id)) {
+      if (err) throw err;
+      
+      addAccounts(ah[0], 'Savings Account');
+      addAccounts(ah[0], 'Checking Account');
+      return;
+    };
+
     AccountHolder.create([
       { username: 'demo', email: 'demo@demo.com', password: 'demo' }
     ], function (err, accountHolder) {
@@ -20,6 +38,9 @@ module.exports = function (app) {
 
             console.log('Created plan:', plan);
           });
+
+        // addAccounts(accountHolder[0], 'Savings Account');
+        // addAccounts(accountHolder[0], 'Checking Account');
       });
   });
 

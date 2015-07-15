@@ -24,7 +24,7 @@
 				});
 		};
 
-		UserService.LogOut = function (user, cb) {
+		UserService.LogOut = function () {
 			AccountHolder.logout();
 			userId = null;
 			AccountHolder.id = userId;
