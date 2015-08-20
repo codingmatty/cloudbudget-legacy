@@ -3,7 +3,7 @@
 ## Summary
 
 Cloud Budget is a Free and Open Source self-hostable budget management tool, inspired by some apps I have tried to use in the past.
-######Check out the [DEMO](http://cloudbudget.majacobs.net).
+######Check out the ~~DEMO~~.
 * username: demo
 * password: demo
 
