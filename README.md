@@ -49,15 +49,18 @@ When you add a transaction, you can use 1 of the 4 tags: `count`, `don't count`,
 
 #### Setup
 
-* `git clone https://github.com/swengmatt/cloudbudget.git`
-* `cd cloudbudget`
-* `npm install`
-* Setup MongoDB:
- * `mongo`
- * `use cloudbudget_dev`
-* `webpack`
-* `node .`
-* Open browser window to http://localhost:3000/
+1. `git clone https://github.com/swengmatt/cloudbudget.git`
+2. `cd cloudbudget`
+3. `npm install`
+4. Setup MongoDB:
+ 1. `mongo`
+ 2. `use cloudbudget_dev`
+5. `webpack`
+6. `node .`
+7. Open browser window to http://localhost:3000/
+8. Login with credentials (which can be changed [here](https://github.com/swengmatt/cloudbudget/blob/master/server/boot/demo.js#L26)):
+  * username: demo
+  * password: demo
 
 ## Changelog
 
