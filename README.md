@@ -1,6 +1,6 @@
 # Cloud Budget
 
-# NOTE: This is a legacy project and I am currently re-working from the ground up using ES6 on the backend and whatever frontend framework I feel like ;p
+# NOTE: This is a legacy project and I am currently re-working from the ground up using ES6 on the backend and whatever frontend framework I feel like :stuck_out_tongue_winking_eye: 
 
 ## Summary
 
