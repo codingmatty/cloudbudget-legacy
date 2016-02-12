@@ -1,5 +1,7 @@
 # Cloud Budget
 
+# NOTE: This is a legacy project and I am currently re-working from the ground up using ES6 on the backend and whatever frontend framework I feel like ;p
+
 ## Summary
 
 Cloud Budget is a Free and Open Source self-hostable budget management tool, inspired by some apps I have tried to use in the past.
